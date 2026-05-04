@@ -1,0 +1,209 @@
+@startuml monitoring
+
+title Bounded Context: Monitoring & Automation
+
+package "Monitoring & Automation" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    enum AirQualityLevel {
+      GOOD
+      MODERATE
+      CRITICAL
+    }
+
+    enum NodeStatus {
+      ACTIVE
+      INACTIVE
+      CRITICAL
+    }
+
+    enum AutomationAction {
+      ACTIVATE_FAN
+      DEACTIVATE_FAN
+      SEND_ALERT
+    }
+
+    class NodeId <<value object>> {
+      - value: string
+      + getValue(): string
+    }
+
+    class AirQualityReading <<entity>> <<aggregate root>> {
+      - readingId: string
+      - nodeId: NodeId
+      - co2: number
+      - temperature: number
+      - humidity: number
+      - level: AirQualityLevel
+      - recordedAt: Date
+      + isAboveThreshold(threshold: number): boolean
+      + getLevel(): AirQualityLevel
+    }
+
+    class AutomationRule <<entity>> <<aggregate root>> {
+      - ruleId: string
+      - nodeId: NodeId
+      - metric: string
+      - operator: string
+      - thresholdValue: number
+      - action: AutomationAction
+      - isActive: boolean
+      + evaluate(reading: AirQualityReading): boolean
+    }
+
+    class EquipmentStatus <<entity>> {
+      - nodeId: NodeId
+      - status: NodeStatus
+      - lastCo2: number
+      - lastTemperature: number
+      - lastHumidity: number
+      - lastReadingAt: Date
+    }
+
+    class FanControlLog <<entity>> {
+      - logId: string
+      - nodeId: NodeId
+      - action: string
+      - source: string
+      - triggeredAt: Date
+    }
+
+    class GetTelemetryHistoryQuery {
+      + nodeId: string
+      + from: Date
+      + to: Date
+    }
+
+    class GetEquipmentStatusQuery {
+      + nodeId: string
+    }
+
+    class ConfigureThresholdCommand {
+      + nodeId: string
+      + metric: string
+      + thresholdValue: number
+      + action: AutomationAction
+    }
+
+    class TriggerFanCommand {
+      + nodeId: string
+      + action: string
+      + source: string
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    class MonitoringApi {
+      - baseUrl: string
+    }
+
+    class AirQualityApiEndpoint {
+      + getReadings(nodeId: string): Observable<AirQualityReading[]>
+      + getLatest(nodeId: string): Observable<AirQualityReading>
+    }
+
+    class AutomationRuleApiEndpoint {
+      + getRules(nodeId: string): Observable<AutomationRule[]>
+      + createRule(rule: AutomationRule): Observable<AutomationRule>
+      + updateRule(rule: AutomationRule): Observable<AutomationRule>
+    }
+
+    class TelemetryHistoryApiEndpoint {
+      + getHistory(query: GetTelemetryHistoryQuery): Observable<AirQualityReading[]>
+    }
+
+    class AirQualityAssembler {
+      + toDomain(response: AirQualityResponse): AirQualityReading
+    }
+
+    class AutomationRuleAssembler {
+      + toDomain(response: AutomationRuleResponse): AutomationRule
+      + toRequest(command: ConfigureThresholdCommand): AutomationRuleRequest
+    }
+  }
+
+  ' ─── Application Layer ───────────────────────────────────
+  package "application" {
+    class MonitoringStore {
+      - readings: AirQualityReading[]
+      - rules: AutomationRule[]
+      - status: EquipmentStatus
+      + loadDashboard(nodeId: string): void
+      + configureThreshold(command: ConfigureThresholdCommand): void
+      + triggerFan(command: TriggerFanCommand): void
+    }
+  }
+
+  ' ─── Presentation Layer ──────────────────────────────────
+  package "presentation/views" {
+
+    class TelemetryDashboardComponent {
+      - store: MonitoringStore
+      - nodeId: string
+      + ngOnInit(): void
+      + refreshData(): void
+    }
+
+    class TelemetryChartComponent {
+      - nodeId: string
+      - chartData: AirQualityReading[]
+      + ngOnChanges(): void
+      + buildChartConfig(): any
+    }
+
+    class TelemetryHistoryComponent {
+      - store: MonitoringStore
+      + loadHistory(query: GetTelemetryHistoryQuery): void
+    }
+
+    class AutomationRuleListComponent {
+      - store: MonitoringStore
+      + ngOnInit(): void
+      + onToggleRule(ruleId: string): void
+    }
+
+    class AutomationRuleFormComponent {
+      - store: MonitoringStore
+      + onSubmit(command: ConfigureThresholdCommand): void
+    }
+
+    class EquipmentStatusCardComponent {
+      - status: EquipmentStatus
+      + getStatusColor(): string
+      + ngOnChanges(): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+AirQualityReading "1" *-- "1" NodeId
+AirQualityReading "1" *-- "1" AirQualityLevel
+AutomationRule "1" *-- "1" NodeId
+AutomationRule "1" *-- "1" AutomationAction
+EquipmentStatus "1" *-- "1" NodeStatus
+
+MonitoringStore --> AirQualityApiEndpoint
+MonitoringStore --> AutomationRuleApiEndpoint
+MonitoringStore --> TelemetryHistoryApiEndpoint
+
+TelemetryDashboardComponent --> MonitoringStore
+TelemetryChartComponent --> MonitoringStore
+TelemetryHistoryComponent --> MonitoringStore
+AutomationRuleListComponent --> MonitoringStore
+AutomationRuleFormComponent --> MonitoringStore
+EquipmentStatusCardComponent --> MonitoringStore
+
+MonitoringApi --> AirQualityApiEndpoint
+MonitoringApi --> AutomationRuleApiEndpoint
+MonitoringApi --> TelemetryHistoryApiEndpoint
+
+AirQualityApiEndpoint --> AirQualityAssembler
+AutomationRuleApiEndpoint --> AutomationRuleAssembler
+
+AutomationRule --> AirQualityReading : evaluates
+
+@enduml

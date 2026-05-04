@@ -1,0 +1,194 @@
+@startuml analytics
+
+title Bounded Context: Analytics & Reporting
+
+package "Analytics & Reporting" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    enum ReportStatus {
+      PENDING
+      GENERATED
+      FAILED
+    }
+
+    class InstitutionId <<value object>> {
+      - value: string
+      + getValue(): string
+    }
+
+    class TrendData <<entity>> {
+      - nodeId: string
+      - institutionId: string
+      - date: Date
+      - avgCo2: number
+      - avgTemperature: number
+      - avgHumidity: number
+      - sampleCount: number
+    }
+
+    class ConcentrationScore <<entity>> <<aggregate root>> {
+      - scoreId: string
+      - institutionId: InstitutionId
+      - nodeId: string
+      - metric: string
+      - value: number
+      - period: string
+      - calculatedAt: Date
+      + getLabel(): string
+      + getColor(): string
+    }
+
+    class ConcentrationPeriod <<entity>> {
+      - periodId: string
+      - nodeId: string
+      - institutionId: string
+      - startTime: Date
+      - endTime: Date
+      - avgCo2: number
+      - durationMinutes: number
+    }
+
+    class MonthlyReport <<entity>> <<aggregate root>> {
+      - reportId: string
+      - institutionId: InstitutionId
+      - period: string
+      - score: number
+      - status: ReportStatus
+      - failureReason: string
+      - downloadUrl: string
+      - generatedAt: Date
+    }
+
+    class AuditLogEntry <<entity>> {
+      - logId: string
+      - entityType: string
+      - action: string
+      - performedBy: string
+      - timestamp: Date
+      - details: string
+    }
+
+    class GenerateMonthlyReportCommand {
+      + institutionId: string
+      + period: string
+    }
+
+    class GetAuditLogQuery {
+      + entityType: string
+      + from: Date
+      + to: Date
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    class AnalyticsApi {
+      - baseUrl: string
+    }
+
+    class TrendApiEndpoint {
+      + getTrends(nodeId: string, from: Date, to: Date): Observable<TrendData[]>
+    }
+
+    class ConcentrationScoreApiEndpoint {
+      + getScore(institutionId: string, period: string): Observable<ConcentrationScore>
+    }
+
+    class MonthlyReportApiEndpoint {
+      + getReports(institutionId: string): Observable<MonthlyReport[]>
+      + generate(command: GenerateMonthlyReportCommand): Observable<MonthlyReport>
+      + download(reportId: string): Observable<Blob>
+    }
+
+    class AuditLogApiEndpoint {
+      + getLogs(query: GetAuditLogQuery): Observable<AuditLogEntry[]>
+    }
+
+    class TrendAssembler {
+      + toDomain(response: TrendResponse): TrendData
+    }
+
+    class ConcentrationScoreAssembler {
+      + toDomain(response: ConcentrationScoreResponse): ConcentrationScore
+    }
+
+    class MonthlyReportAssembler {
+      + toDomain(response: MonthlyReportResponse): MonthlyReport
+    }
+  }
+
+  ' ─── Application Layer ───────────────────────────────────
+  package "application" {
+    class AnalyticsStore {
+      - trends: TrendData[]
+      - score: ConcentrationScore
+      - reports: MonthlyReport[]
+      - auditLogs: AuditLogEntry[]
+      + loadDashboard(institutionId: string): void
+      + generateReport(command: GenerateMonthlyReportCommand): void
+      + getLogs(query: GetAuditLogQuery): void
+    }
+  }
+
+  ' ─── Presentation Layer ──────────────────────────────────
+  package "presentation/views" {
+
+    class HealthScoreComponent {
+      - score: ConcentrationScore
+      + getScoreLabel(): string
+      + getScoreColor(): string
+      + ngOnChanges(): void
+    }
+
+    class TrendChartComponent {
+      - nodeId: string
+      - store: AnalyticsStore
+      + ngOnInit(): void
+      + loadTrend(): void
+      + buildChartConfig(): any
+    }
+
+    class MonthlyReportComponent {
+      - store: AnalyticsStore
+      + ngOnInit(): void
+      + onDownload(reportId: string): void
+      + onRequestNew(): void
+    }
+
+    class AuditLogViewerComponent {
+      - store: AnalyticsStore
+      + ngOnInit(): void
+      + onFilter(query: GetAuditLogQuery): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+ConcentrationScore "1" *-- "1" InstitutionId
+MonthlyReport "1" *-- "1" InstitutionId
+MonthlyReport "1" *-- "1" ReportStatus
+MonthlyReport "1" *-- "0..*" ConcentrationPeriod
+
+AnalyticsStore --> TrendApiEndpoint
+AnalyticsStore --> ConcentrationScoreApiEndpoint
+AnalyticsStore --> MonthlyReportApiEndpoint
+AnalyticsStore --> AuditLogApiEndpoint
+
+HealthScoreComponent --> AnalyticsStore
+TrendChartComponent --> AnalyticsStore
+MonthlyReportComponent --> AnalyticsStore
+AuditLogViewerComponent --> AnalyticsStore
+
+AnalyticsApi --> TrendApiEndpoint
+AnalyticsApi --> ConcentrationScoreApiEndpoint
+AnalyticsApi --> MonthlyReportApiEndpoint
+AnalyticsApi --> AuditLogApiEndpoint
+
+TrendApiEndpoint --> TrendAssembler
+ConcentrationScoreApiEndpoint --> ConcentrationScoreAssembler
+MonthlyReportApiEndpoint --> MonthlyReportAssembler
+
+@enduml

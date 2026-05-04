@@ -108,6 +108,8 @@ package "Shared" {
     }
 
     class PageNotFoundComponent {
+
+
       + ngOnInit(): void
     }
   }

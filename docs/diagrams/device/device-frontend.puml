@@ -1,0 +1,187 @@
+@startuml device-management
+
+title Bounded Context: Device & Asset Management
+
+package "Device & Asset Management" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    enum DeviceLifecycleStatus {
+      REGISTERED
+      LINKED
+      ACTIVE
+      DECOMMISSIONED
+    }
+
+    enum FirmwareUpdateStatus {
+      SUCCESS
+      FAILED
+    }
+
+    class NodeId <<value object>> {
+      - value: string
+      + getValue(): string
+    }
+
+    class SensorNode <<entity>> <<aggregate root>> {
+      - nodeId: NodeId
+      - nodeUuid: string
+      - institutionId: string
+      - firmwareVersion: string
+      - batteryLevel: number
+      - status: DeviceLifecycleStatus
+      - registeredAt: Date
+      - decommissionedAt: Date
+      + isLinked(): boolean
+      + isActive(): boolean
+      + decommission(): void
+    }
+
+    class DeviceOwnership <<entity>> {
+      - ownershipId: string
+      - nodeUuid: string
+      - userUuid: string
+      - linkedAt: Date
+      - transferredAt: Date
+      - isCurrent: boolean
+    }
+
+    class FirmwareUpdateLog <<entity>> {
+      - logId: string
+      - nodeUuid: string
+      - previousVersion: string
+      - newVersion: string
+      - status: FirmwareUpdateStatus
+      - updatedAt: Date
+    }
+
+    class StockSummary <<entity>> {
+      - institutionId: string
+      - totalDevices: number
+      - activeDevices: number
+      - linkedDevices: number
+      - decommissionedDevices: number
+    }
+
+    class RegisterNodeCommand {
+      + nodeUuid: string
+      + institutionId: string
+      + firmwareVersion: string
+    }
+
+    class LinkDeviceCommand {
+      + nodeUuid: string
+      + userUuid: string
+    }
+
+    class DecommissionDeviceCommand {
+      + nodeId: string
+    }
+
+    class GetDevicesQuery {
+      + institutionId: string
+      + status: DeviceLifecycleStatus
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    class DeviceManagementApi {
+      - baseUrl: string
+    }
+
+    class SensorNodeApiEndpoint {
+      + getAll(query: GetDevicesQuery): Observable<SensorNode[]>
+      + getById(id: string): Observable<SensorNode>
+      + register(request: SensorNodeRequest): Observable<SensorNode>
+      + decommission(id: string): Observable<void>
+    }
+
+    class DeviceOwnershipApiEndpoint {
+      + link(request: LinkDeviceRequest): Observable<DeviceOwnership>
+      + getByNode(nodeId: string): Observable<DeviceOwnership[]>
+    }
+
+    class FirmwareLogApiEndpoint {
+      + getLogs(nodeId: string): Observable<FirmwareUpdateLog[]>
+    }
+
+    class SensorNodeAssembler {
+      + toDomain(response: SensorNodeResponse): SensorNode
+      + toRequest(command: RegisterNodeCommand): SensorNodeRequest
+    }
+
+    class DeviceOwnershipAssembler {
+      + toDomain(response: DeviceOwnershipResponse): DeviceOwnership
+    }
+  }
+
+  ' ─── Application Layer ───────────────────────────────────
+  package "application" {
+    class DeviceManagementStore {
+      - devices: SensorNode[]
+      - stock: StockSummary
+      + loadDevices(query: GetDevicesQuery): void
+      + registerNode(command: RegisterNodeCommand): void
+      + linkDevice(command: LinkDeviceCommand): void
+      + decommission(command: DecommissionDeviceCommand): void
+    }
+  }
+
+  ' ─── Presentation Layer ──────────────────────────────────
+  package "presentation/views" {
+
+    class DeviceListComponent {
+      - store: DeviceManagementStore
+      + ngOnInit(): void
+      + onDecommission(id: string): void
+      + refreshDevices(): void
+    }
+
+    class LinkNodeComponent {
+      - store: DeviceManagementStore
+      - nodeIdInput: string
+      + onLink(): void
+      + validateCode(): boolean
+      + onSuccess(): void
+    }
+
+    class DeviceHealthComponent {
+      - device: SensorNode
+      + getBatteryColor(): string
+      + ngOnChanges(): void
+    }
+
+    class FirmwareStatusComponent {
+      - device: SensorNode
+      + getFirmwareBadge(): string
+      + onUpdateFirmware(): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+SensorNode "1" *-- "1" NodeId
+SensorNode "1" *-- "1" DeviceLifecycleStatus
+SensorNode "1" *-- "0..*" DeviceOwnership
+SensorNode "1" *-- "0..*" FirmwareUpdateLog
+
+DeviceManagementStore --> SensorNodeApiEndpoint
+DeviceManagementStore --> DeviceOwnershipApiEndpoint
+DeviceManagementStore --> FirmwareLogApiEndpoint
+
+DeviceListComponent --> DeviceManagementStore
+LinkNodeComponent --> DeviceManagementStore
+DeviceHealthComponent --> DeviceManagementStore
+FirmwareStatusComponent --> DeviceManagementStore
+
+DeviceManagementApi --> SensorNodeApiEndpoint
+DeviceManagementApi --> DeviceOwnershipApiEndpoint
+DeviceManagementApi --> FirmwareLogApiEndpoint
+
+SensorNodeApiEndpoint --> SensorNodeAssembler
+DeviceOwnershipApiEndpoint --> DeviceOwnershipAssembler
+
+@enduml
