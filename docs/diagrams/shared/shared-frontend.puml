@@ -1,0 +1,143 @@
+@startuml shared
+
+title Bounded Context: Shared (Kernel Transversal)
+
+package "Shared" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    abstract class BaseEntity {
+      # id: number
+      # createdAt: Date
+      # updatedAt: Date
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    abstract class BaseApi {
+      # baseUrl: string
+      # http: HttpClient
+      + get<T>(endpoint: string): Observable<T>
+      + post<T>(endpoint: string, body: any): Observable<T>
+      + put<T>(endpoint: string, body: any): Observable<T>
+      + delete<T>(endpoint: string): Observable<T>
+    }
+
+    abstract class BaseApiEndpoint {
+      # api: BaseApi
+    }
+
+    abstract class BaseAssembler<D, R> {
+      + toDomain(response: R): D
+      + toRequest(domain: D): R
+    }
+
+    abstract class BaseResponse {
+      + id: number
+      + createdAt: string
+      + updatedAt: string
+    }
+
+    class TokenInterceptor <<interceptor>> {
+      + intercept(req: HttpRequest, next: HttpHandler): Observable<HttpEvent>
+      - addToken(req: HttpRequest, token: string): HttpRequest
+    }
+
+    class ErrorInterceptor <<interceptor>> {
+      + intercept(req: HttpRequest, next: HttpHandler): Observable<HttpEvent>
+      - handleError(error: HttpErrorResponse): Observable<never>
+    }
+
+    class ErrorHandlingEnabledBaseType {
+      # handleApiError(error: any): void
+    }
+  }
+
+  ' ─── Presentation — Components ───────────────────────────
+  package "presentation/components" {
+
+    class LayoutComponent {
+      + title: string
+      + showSidebar: boolean
+    }
+
+    class FooterContentComponent {
+      + appVersion: string
+      + companyName: string
+    }
+
+    class LanguageSwitcherComponent {
+      - currentLang: string
+      + switchLanguage(lang: string): void
+      + getAvailableLanguages(): string[]
+    }
+
+    class ConfirmDialogComponent {
+      + title: string
+      + message: string
+      + onConfirm: EventEmitter<void>
+      + onCancel: EventEmitter<void>
+      + open(): void
+      + close(): void
+    }
+
+    class StatusBadgeComponent {
+      + status: string
+      + color: string
+      + getBadgeClass(): string
+    }
+
+    class LoadingSpinnerComponent {
+      + isLoading: boolean
+      + message: string
+    }
+  }
+
+  ' ─── Presentation — Views ────────────────────────────────
+  package "presentation/views" {
+
+    class HomeComponent {
+      + ngOnInit(): void
+    }
+
+    class AboutComponent {
+      + ngOnInit(): void
+    }
+
+    class PageNotFoundComponent {
+      + ngOnInit(): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+BaseApiEndpoint --> BaseApi
+BaseApiEndpoint --> BaseAssembler
+BaseApi --> TokenInterceptor
+BaseApi --> ErrorInterceptor
+ErrorInterceptor --> ErrorHandlingEnabledBaseType
+
+LayoutComponent *-- FooterContentComponent
+LayoutComponent *-- LanguageSwitcherComponent
+LayoutComponent *-- LoadingSpinnerComponent
+
+note bottom of TokenInterceptor
+  Agrega el JWT Bearer token
+  a cada petición HTTP saliente.
+end note
+
+note bottom of ErrorInterceptor
+  Captura errores 401/403 y
+  redirige al login automáticamente.
+end note
+
+note top of BaseAssembler
+  Convierte DTOs de la API
+  a entidades del dominio
+  y viceversa.
+end note
+
+@enduml
