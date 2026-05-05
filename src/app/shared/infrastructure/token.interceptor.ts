@@ -1,12 +1,18 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  // Por ahora, solo deja pasar la petición sin cambios.
-  // Más adelante, aquí es donde inyectarás el AuthService para pegar el token.
+export const tokenInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
+  const token = localStorage.getItem('ventix_token');
 
-  const authReq = req.clone({
-    // Aquí podrías añadir headers globales si fuera necesario
-  });
+  if (token) {
+    const cloned = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`)
+    });
+    return next(cloned);
+  }
 
-  return next(authReq);
+  return next(req);
 };

@@ -1,23 +1,33 @@
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+export const errorInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
+  const router = inject(Router);
 
-export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
-    catchError((error) => {
-      // Aquí puedes manejar errores específicos por código de estado
-      if ([401, 403].includes(error.status)) {
-        // Ejemplo: Si es 401 (No autorizado), podrías redirigir al login
-        console.error('Sesión expirada o falta de permisos.');
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        localStorage.removeItem('ventix_token');
+        router.navigate(['/sign-in']);
       }
 
-      // Extraemos el mensaje de error para que sea legible
-      const errorMessage = error.error?.message || error.statusText || 'Error desconocido en el servidor';
+      if (error.status === 403) {
+        router.navigate(['/home']);
+      }
 
-      console.error(`[Ventix Error ${error.status}]: ${errorMessage}`);
+      const message =
+        error.error?.message ||
+        error.message ||
+        'Ocurrió un error inesperado.';
 
-      // Retornamos el error para que el componente que hizo la petición también pueda manejarlo
-      return throwError(() => new Error(errorMessage));
+      console.error(`[Ventix Error Interceptor] ${error.status}:`, message);
+      return throwError(() => new Error(message));
     })
   );
 };
