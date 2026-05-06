@@ -1,0 +1,23 @@
+<div class="page">
+  <header class="page-header">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <h1>Notificación</h1>
+  </header>
+
+  <h2 class="section-title">Importantes</h2>
+
+  @for (n of store.notifications(); track n.id) {
+    <div class="notif-card" [class]="n.severity">
+      <div class="notif-icon">{{ n.icon }}</div>
+      <div class="notif-body">
+        <div class="notif-title">{{ n.title }}</div>
+        <div class="notif-desc">{{ n.description }}</div>
+        @if (n.action) {
+          <div class="notif-action">{{ n.action }}</div>
+        }
+      </div>
+      <div class="notif-time">{{ n.time }}</div>
+      <button class="detail-btn">Ver detalles</button>
+    </div>
+  }
+</div>

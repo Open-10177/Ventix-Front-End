@@ -1,0 +1,82 @@
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/favicon.ico" alt="Ventix" width="36"/>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" title="Inicio">🏠</button>
+      <button class="nav-btn" title="Notificaciones" (click)="goToNotifications()">🔔</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-btn" title="Configuración">⚙️</button>
+      <button class="nav-btn avatar-btn" title="Perfil">
+        <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar"/>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+
+    <!-- Top card: greeting + sensors -->
+    <section class="greeting-card">
+      <h2>Hi, Martina Chavez</h2>
+      <div class="sensor-row">
+        <div class="sensor-item">
+          <span class="sensor-icon">🌡️</span>
+          <span class="sensor-value">{{ store.currentReading()?.temperature ?? '—' }}<sup>°C</sup></span>
+          <span class="sensor-label">Temperatura de hoy</span>
+        </div>
+        <div class="sensor-item">
+          <span class="sensor-icon">☁️</span>
+          <span class="sensor-value">{{ store.currentReading()?.co2 ?? '—' }}<sub>ppm</sub></span>
+          <span class="sensor-label">CO₂</span>
+        </div>
+        <div class="sensor-item">
+          <span class="sensor-icon">💧</span>
+          <span class="sensor-value">{{ store.currentReading()?.humidity ?? '—' }}<sub>%</sub></span>
+          <span class="sensor-label">Humedad de hoy</span>
+        </div>
+      </div>
+      <button class="panic-btn">Botón de pánico</button>
+    </section>
+
+    <!-- Ambientes -->
+    <section class="environments-card">
+      <h3>Ambientes</h3>
+      <hr/>
+      @for (env of store.environments(); track env.id) {
+        <div class="env-item">
+          <span class="env-dot" [class.alert]="env.hasAlert"></span>
+          <span class="env-name">{{ env.name }}</span>
+          <span class="env-arrow">→</span>
+        </div>
+      }
+      <button class="map-btn" (click)="goToMap()">Ver mapa</button>
+    </section>
+
+    <!-- Funciones principales -->
+    <section class="functions-col">
+      <button class="function-btn" disabled>Funciones principales</button>
+      <button class="function-btn" (click)="goToHistory()">Historial de datos</button>
+      <button class="function-btn" (click)="goToThresholds()">Configuración de los umbrales</button>
+    </section>
+
+    <!-- Fan usage -->
+    <section class="fan-card">
+      <p class="fan-title">Porcentaje de funcionamiento de los ventiladores - mensual</p>
+      @for (fan of store.fanUsage(); track fan.name) {
+        <div class="fan-row">
+          <span class="fan-name">{{ fan.name }}</span>
+          <div class="fan-bar-bg">
+            <div class="fan-bar-fill" [style.width.%]="fan.pct"></div>
+          </div>
+          <span class="fan-pct">{{ fan.pct }}%</span>
+        </div>
+      }
+    </section>
+
+  </main>
+</div>
