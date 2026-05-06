@@ -1,0 +1,38 @@
+<div class="page">
+  <header class="page-header">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <div class="header-icons">
+      <span>⚙️</span>
+      <span>🔔</span>
+      <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar"/>
+    </div>
+  </header>
+
+  <h1>Mapa del Hogar</h1>
+
+  <div class="content">
+    <!-- Floor plan placeholder -->
+    <div class="floor-plan">
+      <img src="assets/floor-plan.png" alt="Mapa" onerror="this.style.display='none'"/>
+      <div class="floor-placeholder">🏠</div>
+    </div>
+
+    <!-- Room battery panel -->
+    <div class="rooms-panel">
+      <h2>Casa</h2>
+      <div class="battery-header">
+        <span></span>
+        <span class="col-label">Batería</span>
+      </div>
+      @for (room of store.roomBatteries(); track room.id) {
+        <div class="room-row">
+          <span class="room-name">{{ room.name }}</span>
+          <div class="battery-badge" [style.background]="getBatteryColor(room.batteryPct)">
+            <span class="battery-pct">{{ room.batteryPct }}%</span>
+          </div>
+        </div>
+      }
+      <button class="add-btn">Agregar</button>
+    </div>
+  </div>
+</div>
