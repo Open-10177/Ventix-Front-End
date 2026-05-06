@@ -1,0 +1,8 @@
+.mat-spacer {
+  flex: 1 1 auto;
+}
+
+a.active {
+  font-weight: bold;
+  border-bottom: 2px solid white;
+}

@@ -1,0 +1,24 @@
+{
+  "option": {
+  "home": "Home",
+    "about": "About",
+    "devices": "Devices",
+    "monitoring": "Monitoring"
+},
+  "home": {
+  "title": "Welcome to Ventix",
+    "content": "Monitor and manage your devices from one place."
+},
+  "about": {
+  "title": "About Ventix",
+    "content": "Ventix is an IoT device management and monitoring platform."
+},
+  "footer": {
+  "rights": "All rights reserved."
+},
+  "page-not-found": {
+  "title": "Page Not Found",
+    "content": "The path <strong>/{{invalid_path}}</strong> does not exist.",
+    "go-home": "Go Home"
+}
+}
