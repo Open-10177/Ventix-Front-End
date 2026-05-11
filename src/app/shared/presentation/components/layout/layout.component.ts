@@ -3,7 +3,7 @@ import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatButton } from '@angular/material/button';
-import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { FooterContentComponent } from '../footer-content/footer-content.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { FooterContentComponent } from '../footer-content/footer-content.compone
     RouterLink,
     RouterLinkActive,
     MatButton,
-    LanguageSwitcherComponent,
+    LanguageSwitcher,
     RouterOutlet,
     FooterContentComponent
   ],

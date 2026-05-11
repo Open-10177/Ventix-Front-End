@@ -1,0 +1,166 @@
+<mat-sidenav-container class="app-shell">
+
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/favicon.ico" alt="Ventix" width="36"/>
+    </div>
+
+    <mat-nav-list class="sidebar-nav">
+      <mat-list-item class="nav-btn active" title="Inicio">
+        <mat-icon>home</mat-icon>
+      </mat-list-item>
+      <mat-list-item class="nav-btn" title="Notificaciones" (click)="goToNotifications()">
+        <mat-icon [matBadge]="store.notificationCount()" matBadgeColor="warn">notifications</mat-icon>
+      </mat-list-item>
+    </mat-nav-list>
+
+    <div class="sidebar-bottom">
+      <mat-list>
+        <mat-list-item class="nav-btn" title="Configuración">
+          <mat-icon>settings</mat-icon>
+        </mat-list-item>
+        <mat-list-item class="nav-btn" title="Perfil">
+          <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar"/>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content class="main-content">
+
+    <!-- Loading bar -->
+    @if (store.loading()) {
+      <mat-progress-bar mode="indeterminate" color="primary"/>
+    }
+
+    <!-- Error banner -->
+    @if (store.error()) {
+      <mat-card class="error-banner" appearance="outlined">
+        <mat-card-content>
+          <mat-icon color="warn">error_outline</mat-icon>
+          <span>{{ store.error() }}</span>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- Top card: greeting + sensors -->
+    <mat-card class="greeting-card">
+      <mat-card-header>
+        <mat-card-title>Hi, Martina Chavez</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="sensor-row">
+
+          <div class="sensor-item">
+            <mat-icon class="sensor-icon">thermostat</mat-icon>
+            <span class="sensor-value">
+              {{ store.sensorReadings()[0]?.temperature ?? '—' }}<sup>°C</sup>
+            </span>
+            <span class="sensor-label">Temperatura de hoy</span>
+          </div>
+
+          <div class="sensor-item">
+            <mat-icon class="sensor-icon">cloud</mat-icon>
+            <span class="sensor-value">
+              {{ store.sensorReadings()[0]?.co2 ?? '—' }}<sub>ppm</sub>
+            </span>
+            <span class="sensor-label">CO₂</span>
+          </div>
+
+          <div class="sensor-item">
+            <mat-icon class="sensor-icon">water_drop</mat-icon>
+            <span class="sensor-value">
+              {{ store.sensorReadings()[0]?.humidity ?? '—' }}<sub>%</sub>
+            </span>
+            <span class="sensor-label">Humedad de hoy</span>
+          </div>
+
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn" class="panic-btn">
+          <mat-icon>warning</mat-icon>
+          Botón de pánico
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Ambientes -->
+    <mat-card class="environments-card">
+      <mat-card-header>
+        <mat-card-title>Ambientes</mat-card-title>
+      </mat-card-header>
+      <mat-divider/>
+      <mat-card-content>
+        <mat-list>
+          @for (env of store.environments(); track env.id) {
+            <mat-list-item class="env-item">
+              <mat-icon
+                matListItemIcon
+                [color]="env.hasAlert ? 'warn' : 'primary'">
+                {{ env.hasAlert ? 'error' : 'check_circle' }}
+              </mat-icon>
+              <span matListItemTitle>{{ env.name }}</span>
+              <mat-icon matListItemMeta>chevron_right</mat-icon>
+            </mat-list-item>
+            <mat-divider/>
+          }
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="goToMap()">
+          <mat-icon>map</mat-icon>
+          Ver mapa
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Funciones principales -->
+    <mat-card class="functions-card">
+      <mat-card-content>
+        <mat-nav-list>
+          <mat-list-item disabled>
+            <mat-icon matListItemIcon>apps</mat-icon>
+            <span matListItemTitle>Funciones principales</span>
+          </mat-list-item>
+          <mat-divider/>
+          <mat-list-item (click)="goToHistory()">
+            <mat-icon matListItemIcon>history</mat-icon>
+            <span matListItemTitle>Historial de datos</span>
+            <mat-icon matListItemMeta>chevron_right</mat-icon>
+          </mat-list-item>
+          <mat-divider/>
+          <mat-list-item (click)="goToThresholds()">
+            <mat-icon matListItemIcon>tune</mat-icon>
+            <span matListItemTitle>Configuración de los umbrales</span>
+            <mat-icon matListItemMeta>chevron_right</mat-icon>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Fan usage -->
+    <mat-card class="fan-card">
+      <mat-card-header>
+        <mat-card-title>Porcentaje de funcionamiento de los ventiladores</mat-card-title>
+        <mat-card-subtitle>Mensual</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @for (fan of store.fanUsage(); track fan.name) {
+          <div class="fan-row">
+            <span class="fan-name">{{ fan.name }}</span>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="fan.pct"
+              color="primary"
+              class="fan-bar"/>
+            <span class="fan-pct">{{ fan.pct }}%</span>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
