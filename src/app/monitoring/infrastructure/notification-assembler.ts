@@ -1,11 +1,11 @@
 import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
-import { BaseResponse } from '../../shared/infrastructure/base-response';
 import { Notification } from '../domain/model/notification.entity';
-import { NotificationResource } from './notification-response';
+import { NotificationResource, NotificationResponse } from './notification-response';
 
-export class NotificationAssembler implements BaseAssembler<Notification, NotificationResource, BaseResponse> {
+export class NotificationAssembler implements BaseAssembler<Notification, NotificationResource, NotificationResponse> {
+
   toEntityFromResource(resource: NotificationResource): Notification {
-    return {
+    return new Notification({
       id: resource.id,
       title: resource.title,
       description: resource.description,
@@ -13,14 +13,22 @@ export class NotificationAssembler implements BaseAssembler<Notification, Notifi
       severity: resource.severity,
       time: resource.time,
       icon: resource.icon
-    };
+    });
   }
 
   toResourceFromEntity(entity: Notification): NotificationResource {
-    return { ...entity };
+    return {
+      id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      action: entity.action,
+      severity: entity.severity,
+      time: entity.time,
+      icon: entity.icon
+    } as NotificationResource;
   }
 
-  toEntitiesFromResponse(response: BaseResponse): Notification[] {
-    return [];
+  toEntitiesFromResponse(response: NotificationResponse): Notification[] {
+    return response.notifications.map(resource => this.toEntityFromResource(resource as NotificationResource));
   }
 }

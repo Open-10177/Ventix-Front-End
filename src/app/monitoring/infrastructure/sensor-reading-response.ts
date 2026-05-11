@@ -1,4 +1,4 @@
-import { BaseResource } from '../../shared/infrastructure/base-response';
+import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
 
 export interface SensorReadingResource extends BaseResource {
   zone: string;
@@ -6,4 +6,7 @@ export interface SensorReadingResource extends BaseResource {
   co2: number;
   humidity: number;
   timestamp: string;
+}
+export interface  SensorReadingResponse  extends BaseResponse {
+  sensorReading: SensorReadingResource[];
 }

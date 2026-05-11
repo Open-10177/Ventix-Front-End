@@ -1,4 +1,4 @@
-import { BaseResource } from '../../shared/infrastructure/base-response';
+import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
 
 export interface NotificationResource extends BaseResource {
   title: string;
@@ -7,4 +7,8 @@ export interface NotificationResource extends BaseResource {
   severity: 'critical' | 'warning' | 'info';
   time: string;
   icon: string;
+}
+
+export interface NotificationResponse extends BaseResponse {
+  notifications: NotificationResource[];
 }

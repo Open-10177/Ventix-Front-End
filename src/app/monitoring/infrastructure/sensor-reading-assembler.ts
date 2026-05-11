@@ -1,18 +1,18 @@
 import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
-import { BaseResponse } from '../../shared/infrastructure/base-response';
 import { SensorReading } from '../domain/model/sensor-reading.entity';
-import { SensorReadingResource } from './sensor-reading-response';
+import { SensorReadingResource, SensorReadingResponse } from './sensor-reading-response';
 
-export class SensorReadingAssembler implements BaseAssembler<SensorReading, SensorReadingResource, BaseResponse> {
+export class SensorReadingAssembler implements BaseAssembler<SensorReading, SensorReadingResource, SensorReadingResponse> {
+
   toEntityFromResource(resource: SensorReadingResource): SensorReading {
-    return {
+    return  new SensorReading({
       id: resource.id,
       zone: resource.zone,
       temperature: resource.temperature,
       co2: resource.co2,
       humidity: resource.humidity,
       timestamp: new Date(resource.timestamp)
-    };
+    });
   }
 
   toResourceFromEntity(entity: SensorReading): SensorReadingResource {
@@ -23,10 +23,11 @@ export class SensorReadingAssembler implements BaseAssembler<SensorReading, Sens
       co2: entity.co2,
       humidity: entity.humidity,
       timestamp: entity.timestamp.toISOString()
-    };
+    } as SensorReadingResource;
   }
 
-  toEntitiesFromResponse(response: BaseResponse): SensorReading[] {
-    return [];
+  toEntitiesFromResponse(response: SensorReadingResponse): SensorReading[] {
+
+    return response.sensorReading.map(resource =>this.toEntityFromResource( resource as SensorReadingResource));
   }
 }
