@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { MonitoringHomeComponent } from './monitoring/presentation/views/home/home.component';
+import { Home } from './shared/presentation/views/home/home';
 
 const about        = () => import('./shared/presentation/views/about/about.component').then(m => m.AboutComponent);
 const pageNotFound = () => import('./shared/presentation/views/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent);
@@ -8,7 +8,7 @@ const device       = () => import('./device/presentation/device-routes').then(m 
 
 const baseTitle = 'Ventix';
 export const routes: Routes = [
-  { path: 'home',       component:     MonitoringHomeComponent, title: `Home - ${baseTitle}` },
+  { path: 'home',       component:     Home, title: `Home - ${baseTitle}` },
   { path: 'monitoring', loadChildren:  monitoring },
   { path: 'device',     loadChildren:  device },
   { path: 'about',      loadComponent: about,                   title: `About - ${baseTitle}` },
