@@ -1,0 +1,49 @@
+{
+  "kpis": [
+    {
+      "id": 1,
+      "title": "Total de horas",
+      "value": "1.250h",
+      "status": "+12% que el mes anterior"
+    },
+    {
+      "id": 2,
+      "title": "Ahorro de energía",
+      "value": "30%",
+      "status": "50 soles ahorrados"
+    },
+    {
+      "id": 3,
+      "title": "Dispositivos activos",
+      "value": "4 de 6",
+      "status": "Funcionando correctamente"
+    },
+    {
+      "id": 4,
+      "title": "Estado de filtros",
+      "value": "75%",
+      "status": "Óptimo"
+    }
+  ],
+
+  "reports": [
+    {
+      "id": 1,
+      "date": "05/03/26",
+      "zone": "Cuarto",
+      "humidity": "70%",
+      "co2": "40ppm",
+      "temperature": "28,5°C",
+      "action": "Auto. Hum. Alerta"
+    },
+    {
+      "id": 2,
+      "date": "10/03/26",
+      "zone": "Sala",
+      "humidity": "30%",
+      "co2": "50ppm",
+      "temperature": "24,0°C",
+      "action": "Deshumedad prevenir"
+    }
+  ]
+}
