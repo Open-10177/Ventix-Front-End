@@ -1,0 +1,114 @@
+{
+  "telemetry": [
+    {
+      "id": 1,
+      "zone": "General",
+      "temperature": 47,
+      "co2": 400,
+      "humidity": 20,
+      "timestamp": "2026-05-12T09:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "zone": "Cocina",
+      "temperature": 28,
+      "co2": 1450,
+      "humidity": 70,
+      "timestamp": "2026-05-12T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "zone": "Sala",
+      "temperature": 24,
+      "co2": 520,
+      "humidity": 55,
+      "timestamp": "2026-05-12T11:00:00.000Z"
+    }
+  ],
+
+  "alerts": [
+    {
+      "id": 1,
+      "title": "Nivel crítico CO2",
+      "description": "Alerta: Se ha detectado 1,450 ppm de CO2 en la cocina",
+      "action": "El ventilador se ha activado",
+      "severity": "critical",
+      "time": "1h",
+      "icon": "⚠️"
+    },
+    {
+      "id": 2,
+      "title": "Humedad elevada",
+      "description": "70% detectado en la oficina.",
+      "action": "El ventilador se ha activado",
+      "severity": "warning",
+      "time": "Ayer",
+      "icon": "💧"
+    },
+    {
+      "id": 3,
+      "title": "Filtro ventilador 3",
+      "description": "Filtro del ventilador 3 al 8% de vida útil",
+      "action": "Mantenimiento sugerido",
+      "severity": "warning",
+      "time": "Jueves",
+      "icon": "🔧"
+    },
+    {
+      "id": 4,
+      "title": "Hito de ahorro",
+      "description": "Has ahorrado $12 de energía esta semana",
+      "action": "",
+      "severity": "info",
+      "time": "Hace 1 semana",
+      "icon": "⚙️"
+    }
+  ],
+  "kpis": [
+    {
+      "id": 1,
+      "title": "Total de horas",
+      "value": "1.250h",
+      "status": "+12% que el mes anterior"
+    },
+    {
+      "id": 2,
+      "title": "Ahorro de energía",
+      "value": "30%",
+      "status": "50 soles ahorrados"
+    },
+    {
+      "id": 3,
+      "title": "Dispositivos activos",
+      "value": "4 de 6",
+      "status": "Funcionando correctamente"
+    },
+    {
+      "id": 4,
+      "title": "Estado de filtros",
+      "value": "75%",
+      "status": "Óptimo"
+    }
+  ],
+
+  "reports": [
+    {
+      "id": 1,
+      "date": "05/03/26",
+      "zone": "Cuarto",
+      "humidity": "70%",
+      "co2": "40ppm",
+      "temperature": "28,5°C",
+      "action": "Auto. Hum. Alerta"
+    },
+    {
+      "id": 2,
+      "date": "10/03/26",
+      "zone": "Sala",
+      "humidity": "30%",
+      "co2": "50ppm",
+      "temperature": "24,0°C",
+      "action": "Deshumedad prevenir"
+    }
+  ]
+}
