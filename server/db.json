@@ -1,4 +1,69 @@
 {
+  "telemetry": [
+    {
+      "id": 1,
+      "zone": "General",
+      "temperature": 47,
+      "co2": 400,
+      "humidity": 20,
+      "timestamp": "2026-05-12T09:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "zone": "Cocina",
+      "temperature": 28,
+      "co2": 1450,
+      "humidity": 70,
+      "timestamp": "2026-05-12T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "zone": "Sala",
+      "temperature": 24,
+      "co2": 520,
+      "humidity": 55,
+      "timestamp": "2026-05-12T11:00:00.000Z"
+    }
+  ],
+
+  "alerts": [
+    {
+      "id": 1,
+      "title": "Nivel crítico CO2",
+      "description": "Alerta: Se ha detectado 1,450 ppm de CO2 en la cocina",
+      "action": "El ventilador se ha activado",
+      "severity": "critical",
+      "time": "1h",
+      "icon": "⚠️"
+    },
+    {
+      "id": 2,
+      "title": "Humedad elevada",
+      "description": "70% detectado en la oficina.",
+      "action": "El ventilador se ha activado",
+      "severity": "warning",
+      "time": "Ayer",
+      "icon": "💧"
+    },
+    {
+      "id": 3,
+      "title": "Filtro ventilador 3",
+      "description": "Filtro del ventilador 3 al 8% de vida útil",
+      "action": "Mantenimiento sugerido",
+      "severity": "warning",
+      "time": "Jueves",
+      "icon": "🔧"
+    },
+    {
+      "id": 4,
+      "title": "Hito de ahorro",
+      "description": "Has ahorrado $12 de energía esta semana",
+      "action": "",
+      "severity": "info",
+      "time": "Hace 1 semana",
+      "icon": "⚙️"
+    }
+  ],
   "kpis": [
     {
       "id": 1,
