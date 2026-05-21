@@ -9,39 +9,120 @@
     </div>
   </header>
 
-  <h1>{{ store.selectedThreshold()?.zone ?? 'Cuarto 1' }}</h1>
+  <div class="zone-selector-row">
+    <h1>{{ store.selectedThreshold()?.zone ?? 'Zona' }}</h1>
+    <mat-select class="zone-select" [(ngModel)]="selectedZoneId" (ngModelChange)="onZoneChange($event)">
+      @for (cfg of store.thresholdConfigs(); track cfg.id) {
+        <mat-option [value]="cfg.id">{{ cfg.zone }}</mat-option>
+      }
+    </mat-select>
+  </div>
 
   <div class="cards-row">
+
     <!-- Left card: battery + modes -->
     <div class="config-card blue">
-      <div class="card-row">
-        <span class="card-label">Batería</span>
-        <span class="battery-icon">🔋</span>
-      </div>
-      @if (store.selectedThreshold()) {
-        <div class="mode-item">Modo optimizado</div>
-        <div class="mode-item">Modo ahorro</div>
-      }
-    </div>
-
-    <!-- Center: placeholder chart -->
-    <div class="chart-placeholder">
-      <span>📊</span>
-    </div>
-
-    <!-- Right card: settings -->
-    <div class="config-card blue">
       @if (store.selectedThreshold(); as cfg) {
-        <div class="card-label bold">Configuraciones</div>
-        <div class="setting-item">
-          <span>Ventilación</span>
-          <span class="setting-value">{{ cfg.ventilationPct }}%</span>
+        <div class="battery-section">
+          <div class="card-row">
+            <span class="card-label">Batería del nodo</span>
+            <span class="battery-icon">🔋</span>
+          </div>
+          <div class="battery-bar-wrap">
+            <div class="battery-bar">
+              <div class="battery-fill" [style.width.%]="getBatteryPct()"></div>
+            </div>
+            <span class="battery-pct">{{ getBatteryPct() }}%</span>
+          </div>
         </div>
+
+        <div class="modes-section">
+          <div class="card-label" style="margin-bottom: 8px;">Modo de operación</div>
+          <button class="mode-btn" [class.active]="activeMode === 'auto'" (click)="setMode('auto')">
+            <span class="mode-dot"></span>
+            <span>Modo automático</span>
+            @if (activeMode === 'auto') { <span class="mode-badge">ON</span> }
+          </button>
+          <button class="mode-btn" [class.active]="activeMode === 'manual'" (click)="setMode('manual')">
+            <span class="mode-dot"></span>
+            <span>Modo manual</span>
+            @if (activeMode === 'manual') { <span class="mode-badge">ON</span> }
+          </button>
+        </div>
+
+        <div class="node-id">Nodo #{{ cfg.nodeId }}</div>
+      }
+    </div>
+
+    <!-- Center card: bar chart -->
+    <div class="config-card chart-card">
+      @if (getZoneReading(); as reading) {
+        <div class="card-label bold chart-title">Lecturas actuales — {{ reading.zone }}</div>
+        <div class="chart-bars">
+          <div class="bar-group">
+            <span class="bar-label">🌡️ Temp.</span>
+            <div class="bar-track">
+              <div class="bar-fill temp" [style.width.%]="getBarWidth(reading.temperature, 50)"></div>
+            </div>
+            <span class="bar-value">{{ reading.temperature }}°C</span>
+          </div>
+          <div class="bar-group">
+            <span class="bar-label">💨 CO₂</span>
+            <div class="bar-track">
+              <div class="bar-fill co2" [style.width.%]="getBarWidth(reading.co2, 2000)"></div>
+            </div>
+            <span class="bar-value">{{ reading.co2 }} ppm</span>
+          </div>
+          <div class="bar-group">
+            <span class="bar-label">💧 Humedad</span>
+            <div class="bar-track">
+              <div class="bar-fill humidity" [style.width.%]="getBarWidth(reading.humidity, 100)"></div>
+            </div>
+            <span class="bar-value">{{ reading.humidity }}%</span>
+          </div>
+        </div>
+        <span class="chart-timestamp">Última lectura: {{ reading.timestamp | date:'HH:mm' }}</span>
+      } @else {
+        <div class="no-data">Sin lecturas disponibles</div>
+      }
+    </div>
+
+    <!-- Right card: sliders -->
+    <div class="config-card blue">
+      @if (store.selectedThreshold()) {
+        <div class="card-label bold">Configuraciones</div>
+
         <div class="setting-item">
-          <span>Temperatura</span>
-          <span class="setting-value">{{ cfg.temperatureLimit }}°C</span>
+          <div class="setting-header">
+            <span class="setting-label">💨 Ventilación</span>
+            <span class="setting-value">{{ ventilationValue }}%</span>
+          </div>
+          <mat-slider min="0" max="100" step="1" class="slider">
+            <input matSliderThumb [(ngModel)]="ventilationValue">
+          </mat-slider>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">🌡️ Temperatura límite</span>
+            <span class="setting-value">{{ temperatureValue }}°C</span>
+          </div>
+          <mat-slider min="15" max="50" step="1" class="slider">
+            <input matSliderThumb [(ngModel)]="temperatureValue">
+          </mat-slider>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">☁️ Límite CO₂</span>
+            <span class="setting-value">{{ co2Value }} ppm</span>
+          </div>
+          <mat-slider min="400" max="1400" step="50" class="slider">
+            <input matSliderThumb [(ngModel)]="co2Value">
+          </mat-slider>
         </div>
       }
     </div>
+
   </div>
 </div>

@@ -6,17 +6,17 @@ import { ThresholdConfigResource } from './threshold-config-response';
 import { ThresholdConfigAssembler } from './threshold-config-assembler';
 import { environment } from '../../../enviroment/environment';
 
-export class ThresholdConfigApiEndpoint extends BaseApiEndpoint
-<ThresholdConfig,
+export class ThresholdConfigApiEndpoint extends BaseApiEndpoint<
+  ThresholdConfig,
   ThresholdConfigResource,
   BaseResponse,
-ThresholdConfigAssembler
+  ThresholdConfigAssembler
 > {
   constructor(http: HttpClient) {
     super(
       http,
-      `${environment.baseUrl}${environment.deviceInventoryEndpointPath}`,
-      new ThresholdConfigAssembler()
+      `${environment.baseUrl}${environment.thresholdConfigEndpointPath}`,
+      new ThresholdConfigAssembler(),
     );
   }
 }

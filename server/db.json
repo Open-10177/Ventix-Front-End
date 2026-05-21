@@ -25,16 +25,15 @@
       "timestamp": "2026-05-12T11:00:00.000Z"
     }
   ],
-
   "alerts": [
     {
       "id": 1,
-      "title": "Nivel crítico CO2",
+      "title": "Nivel critico CO2",
       "description": "Alerta: Se ha detectado 1,450 ppm de CO2 en la cocina",
       "action": "El ventilador se ha activado",
       "severity": "critical",
       "time": "1h",
-      "icon": "⚠️"
+      "icon": "warning"
     },
     {
       "id": 2,
@@ -43,25 +42,25 @@
       "action": "El ventilador se ha activado",
       "severity": "warning",
       "time": "Ayer",
-      "icon": "💧"
+      "icon": "water_drop"
     },
     {
       "id": 3,
       "title": "Filtro ventilador 3",
-      "description": "Filtro del ventilador 3 al 8% de vida útil",
+      "description": "Filtro del ventilador 3 al 8% de vida util",
       "action": "Mantenimiento sugerido",
       "severity": "warning",
       "time": "Jueves",
-      "icon": "🔧"
+      "icon": "build"
     },
     {
       "id": 4,
       "title": "Hito de ahorro",
-      "description": "Has ahorrado $12 de energía esta semana",
+      "description": "Has ahorrado S/ 12 de energia esta semana",
       "action": "",
       "severity": "info",
       "time": "Hace 1 semana",
-      "icon": "⚙️"
+      "icon": "settings"
     }
   ],
   "kpis": [
@@ -73,7 +72,7 @@
     },
     {
       "id": 2,
-      "title": "Ahorro de energía",
+      "title": "Ahorro de energia",
       "value": "30%",
       "status": "50 soles ahorrados"
     },
@@ -87,10 +86,9 @@
       "id": 4,
       "title": "Estado de filtros",
       "value": "75%",
-      "status": "Óptimo"
+      "status": "Optimo"
     }
   ],
-
   "reports": [
     {
       "id": 1,
@@ -98,7 +96,7 @@
       "zone": "Cuarto",
       "humidity": "70%",
       "co2": "40ppm",
-      "temperature": "28,5°C",
+      "temperature": "28.5 C",
       "action": "Auto. Hum. Alerta"
     },
     {
@@ -107,8 +105,66 @@
       "zone": "Sala",
       "humidity": "30%",
       "co2": "50ppm",
-      "temperature": "24,0°C",
+      "temperature": "24.0 C",
       "action": "Deshumedad prevenir"
+    }
+  ],
+  "devices": [
+    {
+      "id": 1,
+      "name": "Ventix Air Pro",
+      "zone": "Sala",
+      "status": "active",
+      "batteryLevel": 86,
+      "filterHealth": 75
+    },
+    {
+      "id": 2,
+      "name": "Ventix Air Mini",
+      "zone": "Cocina",
+      "status": "warning",
+      "batteryLevel": 64,
+      "filterHealth": 42
+    },
+    {
+      "id": 3,
+      "name": "Ventix Sense CO2",
+      "zone": "Cuarto",
+      "status": "active",
+      "batteryLevel": 91,
+      "filterHealth": null
+    }
+  ],
+  "threshold-configs": [
+    {
+      "id": 1,
+      "nodeId": 1,
+      "zone": "Sala",
+      "ventilationPct": 60,
+      "temperatureLimit": 28,
+      "co2Limit": 900,
+      "optimizedMode": true,
+      "savingMode": false
+    },
+    {
+      "id": 2,
+      "nodeId": 2,
+      "zone": "Cocina",
+      "ventilationPct": 80,
+      "temperatureLimit": 30,
+      "co2Limit": 1200,
+      "optimizedMode": false,
+      "savingMode": true
+    },
+    {
+      "id": 3,
+      "nodeId": 3,
+      "zone": "Cuarto",
+      "ventilationPct": 55,
+      "temperatureLimit": 27,
+      "co2Limit": 850,
+      "optimizedMode": true,
+      "savingMode": false
     }
   ]
 }
