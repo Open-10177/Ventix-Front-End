@@ -94,20 +94,10 @@
 
         <div class="setting-item">
           <div class="setting-header">
-            <span class="setting-label">💨 Ventilación</span>
-            <span class="setting-value">{{ ventilationValue }}%</span>
-          </div>
-          <mat-slider min="0" max="100" step="1" class="slider">
-            <input matSliderThumb [(ngModel)]="ventilationValue">
-          </mat-slider>
-        </div>
-
-        <div class="setting-item">
-          <div class="setting-header">
             <span class="setting-label">🌡️ Temperatura límite</span>
             <span class="setting-value">{{ temperatureValue }}°C</span>
           </div>
-          <mat-slider min="15" max="50" step="1" class="slider">
+          <mat-slider min="15" max="50" step="1" class="slider" [disabled]="activeMode === 'auto'">
             <input matSliderThumb [(ngModel)]="temperatureValue">
           </mat-slider>
         </div>
@@ -117,10 +107,21 @@
             <span class="setting-label">☁️ Límite CO₂</span>
             <span class="setting-value">{{ co2Value }} ppm</span>
           </div>
-          <mat-slider min="400" max="1400" step="50" class="slider">
+          <mat-slider min="400" max="1400" step="50" class="slider" [disabled]="activeMode === 'auto'">
             <input matSliderThumb [(ngModel)]="co2Value">
           </mat-slider>
         </div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">💧 Humedad</span>
+            <span class="setting-value">{{ ventilationValue }}%</span>
+          </div>
+          <mat-slider min="0" max="100" step="1" class="slider" [disabled]="activeMode === 'auto'">
+            <input matSliderThumb [(ngModel)]="ventilationValue">
+          </mat-slider>
+        </div>
+
       }
     </div>
 
