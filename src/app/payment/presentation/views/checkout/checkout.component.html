@@ -1,0 +1,39 @@
+<section class="checkout-page">
+  <header>
+    <p class="eyebrow">Checkout</p>
+    <h1>Confirm your payment</h1>
+  </header>
+
+  @if (plan()) {
+    <article class="checkout-summary">
+      <h2>{{ plan()?.name }}</h2>
+      <p class="price">S/ {{ plan()?.price }}</p>
+      <p>Recurring payment for Ventix monitoring services.</p>
+    </article>
+
+    <div class="payment-box">
+      <label>
+        Card number
+        <input type="text" placeholder="4242 4242 4242 4242">
+      </label>
+
+      <div class="payment-grid">
+        <label>
+          Expiration
+          <input type="text" placeholder="12/30">
+        </label>
+
+        <label>
+          CVC
+          <input type="text" placeholder="123">
+        </label>
+      </div>
+    </div>
+
+    <button type="button" [disabled]="isProcessing()" (click)="onConfirmPayment()">
+      {{ isProcessing() ? 'Processing...' : 'Confirm payment' }}
+    </button>
+  } @else {
+    <p class="empty-state">Selected plan was not found.</p>
+  }
+</section>
