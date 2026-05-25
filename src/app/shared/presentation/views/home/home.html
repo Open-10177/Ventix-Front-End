@@ -10,6 +10,11 @@
       <mat-list-item class="nav-btn active" title="Inicio">
         <mat-icon>home</mat-icon>
       </mat-list-item>
+
+      <mat-list-item class="nav-btn" title="Payment" (click)="goToPayment()">
+        <mat-icon>payment</mat-icon>
+      </mat-list-item>
+
       <mat-list-item class="nav-btn" title="Notificaciones" (click)="goToNotifications()">
         <mat-icon [matBadge]="store.notificationCount()" matBadgeColor="warn">notifications</mat-icon>
       </mat-list-item>

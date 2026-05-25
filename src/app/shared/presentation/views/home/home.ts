@@ -60,4 +60,7 @@ export class Home implements OnInit {
   goToThresholds() {
     this.router.navigate(['/device/thresholds']);
   }
+  goToPayment() {
+    this.router.navigate(['/payment']);
+  }
 }
