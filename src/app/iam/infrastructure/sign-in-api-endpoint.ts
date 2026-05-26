@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environment/environment';
 
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { UserEntity } from '../domain/model/user.entity';

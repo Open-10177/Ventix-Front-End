@@ -30,7 +30,7 @@ export class IamApi extends BaseApi {
     return this.signUpEndpoint.create(user);
   }
 
-  recoverPassword(user: UserEntity): Observable<UserEntity> {
-    return this.recoverPasswordEndpoint.create(user);
+  updatePassword(user: UserEntity): Observable<UserEntity> {
+    return this.recoverPasswordEndpoint.update(user, user.id);
   }
 }

@@ -166,5 +166,17 @@
       "optimizedMode": true,
       "savingMode": false
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Ruth",
+      "lastName": "Sanchez",
+      "phone": "999999999",
+      "email": "test@ventix.com",
+      "password": "Michi2324#",
+      "role": "user",
+      "photoUrl": ""
+    }
   ]
 }

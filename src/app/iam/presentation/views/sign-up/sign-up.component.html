@@ -28,38 +28,87 @@
       <form>
 
         <div class="input-group">
-          <label>{{ 'signup.name' | translate }}</label>
-          <input type="text">
+
+          <label>
+            {{ 'signup.name' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="name"
+            name="name">
+
         </div>
 
         <div class="input-group">
-          <label>{{ 'signup.lastname' | translate }}</label>
-          <input type="text">
+
+          <label>
+            {{ 'signup.lastname' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="lastName"
+            name="lastName">
+
         </div>
 
         <div class="input-group">
-          <label>{{ 'signup.number' | translate }}</label>
-          <input type="text">
+
+          <label>
+            {{ 'signup.number' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="phone"
+            name="phone">
+
         </div>
 
         <div class="input-group">
-          <label>{{ 'signup.email' | translate }}</label>
-          <input type="email">
+
+          <label>
+            {{ 'signup.email' | translate }}
+          </label>
+
+          <input
+            type="email"
+            [(ngModel)]="email"
+            name="email">
+
         </div>
 
         <div class="input-group">
-          <label>{{ 'signup.password' | translate }}</label>
-          <input type="password">
+
+          <label>
+            {{ 'signup.password' | translate }}
+          </label>
+
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password">
+
         </div>
 
         <div class="input-group">
-          <label>{{ 'signup.confirmPassword' | translate }}</label>
-          <input type="password">
+
+          <label>
+            {{ 'signup.confirmPassword' | translate }}
+          </label>
+
+          <input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword">
+
         </div>
 
         <button
           class="register-button"
-          type="button">
+          type="button"
+          (click)="register()">
 
           {{ 'signup.button' | translate }}
 
@@ -75,7 +124,9 @@
 
       <div class="photo-box">
 
-        <p>{{ 'signup.photo' | translate }}</p>
+        <p>
+          {{ 'signup.photo' | translate }}
+        </p>
 
         <span>↓</span>
 
@@ -102,7 +153,10 @@
 
         </button>
 
-        <h2>{{ 'signup.language' | translate }}</h2>
+        <h2>
+          {{ 'signup.language' | translate }}
+        </h2>
+
         <div class="line"></div>
 
         <button

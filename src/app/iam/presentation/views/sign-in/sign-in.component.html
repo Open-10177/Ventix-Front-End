@@ -28,7 +28,8 @@
 
         <input
           type="email"
-          placeholder="">
+          [(ngModel)]="email"
+          name="email">
 
       </div>
 
@@ -46,13 +47,17 @@
 
         <input
           type="password"
-          placeholder="">
+          [(ngModel)]="password"
+          name="password">
 
       </div>
 
       <!-- BUTTON -->
 
-      <button type="submit" class="sign-in-button">
+      <button
+        type="button"
+        class="sign-in-button"
+        (click)="signIn()">
         Sign in
       </button>
 

@@ -18,6 +18,6 @@ export const routes: Routes = [
   { path: 'payment', loadChildren: payment },
   { path: 'iam', loadChildren: iam },
   { path: 'about', loadComponent: about, title: `About - ${baseTitle}` },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/iam/welcome', pathMatch: 'full' },
   { path: '**', loadComponent: pageNotFound, title: `Page Not Found - ${baseTitle}` },
 ];

@@ -3,9 +3,9 @@ export const environment = {
 
   baseUrl: 'http://localhost:3000',
 
-  iamSignInEndpointPath: '/auth/sign-in',
-  iamSignUpEndpointPath: '/auth/sign-up',
-  iamRecoverPasswordEndpointPath: '/auth/recover-password',
+  iamSignInEndpointPath: '/users',
+  iamSignUpEndpointPath: '/users',
+  iamRecoverPasswordEndpointPath: '/users',
 
   monitoringTelemetryEndpointPath: '/telemetry',
   monitoringAlertsEndpointPath: '/alerts',
