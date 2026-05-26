@@ -34,5 +34,11 @@
     "title": "Page Not Found",
     "content": "The path <strong>/{{invalid_path}}</strong> does not exist.",
     "go-home": "Go Home"
+  },
+  "payment": {
+    "title": "Payment",
+    "checkout": "Checkout",
+    "invoice": "Invoices",
+    "subscription": "Subscription"
   }
 }

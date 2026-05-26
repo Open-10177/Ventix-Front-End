@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { NotificationAssembler } from './notification-assembler';
-import { environment } from '../../../enviroment/enviroment';
+import { environment } from '../../../enviroment/environment';
 import { Notification } from '../domain/model/notification.entity';
 import { NotificationResource, NotificationResponse } from './notification-response';
 

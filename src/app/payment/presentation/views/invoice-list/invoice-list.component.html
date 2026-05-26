@@ -1,0 +1,27 @@
+<section class="invoice-page">
+  <header>
+    <p class="eyebrow">Invoices</p>
+    <h1>Billing history</h1>
+  </header>
+
+  @if (store.invoices().length > 0) {
+    <div class="invoice-list">
+      @for (invoice of store.invoices(); track invoice.invoiceId) {
+        <article class="invoice-row">
+          <div>
+            <h2>{{ invoice.invoiceUuid }}</h2>
+            <p>{{ invoice.status }} · {{ invoice.currency }} {{ invoice.amount }}</p>
+          </div>
+
+          <button type="button" (click)="onDownloadInvoice(invoice.invoiceId)">
+            Download
+          </button>
+        </article>
+      }
+    </div>
+  } @else {
+    <article class="empty-state">
+      <p>No invoices found.</p>
+    </article>
+  }
+</section>

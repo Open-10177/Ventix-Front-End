@@ -34,5 +34,11 @@
     "title": "Página No Encontrada",
     "content": "La ruta <strong>/{{invalid_path}}</strong> no existe.",
     "go-home": "Ir al Inicio"
+  },
+  "payment": {
+    "title": "Pago",
+    "checkout": "Finalizar compra",
+    "invoice": "Facturas",
+    "subscription": "Suscripción"
   }
 }

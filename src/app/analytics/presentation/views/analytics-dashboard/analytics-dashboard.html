@@ -1,0 +1,98 @@
+<div class="page">
+
+  <header class="page-header">
+
+    <div class="header-left">
+
+      <button class="back-btn" (click)="goBack()">←</button>
+
+      <h1>Historial de datos</h1>
+
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn">⚙️</button>
+      <button class="icon-btn">🔔</button>
+      <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar" />
+
+    </div>
+
+
+  </header>
+
+  <div class="actions">
+
+    <button class="btn btn-teal">Últimos 30 días</button>
+    <button class="btn btn-teal">Elegir fecha</button>
+    <button class="btn btn-dark">Solicitar reporte</button>
+
+  </div>
+
+  <section class="stats-grid">
+
+    @for (kpi of store.kpis(); track kpi.id) {
+
+      <div class="card">
+
+        <p class="card-title">
+          {{ kpi.title }}
+        </p>
+
+        <p class="card-value">
+          {{ kpi.value }}
+        </p>
+
+        <p class="card-footer">
+          {{ kpi.status }}
+        </p>
+
+      </div>
+    }
+
+  </section>
+
+  <section class="table-container">
+
+    <table>
+
+      <thead>
+
+      <tr>
+        <th>Fecha</th>
+        <th>Zona</th>
+        <th>Humedad</th>
+        <th>CO₂</th>
+        <th>Temperatura</th>
+        <th>Acción del sistema</th>
+      </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for (record of store.historyRecords(); track record.id) {
+
+          <tr>
+
+            <td>{{ record.date }}</td>
+
+            <td>{{ record.zone }}</td>
+
+            <td>{{ record.humidity }}</td>
+
+            <td>{{ record.co2 }}</td>
+
+            <td>{{ record.temperature }}</td>
+
+            <td>{{ record.action }}</td>
+
+          </tr>
+        }
+
+      </tbody>
+
+    </table>
+
+  </section>
+
+</div>

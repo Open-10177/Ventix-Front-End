@@ -5,6 +5,7 @@ export interface ThresholdConfigResource extends BaseResource {
   zone: string;
   ventilationPct: number;
   temperatureLimit: number;
+  co2Limit: number;
   optimizedMode: boolean;
   savingMode: boolean;
 }

@@ -4,7 +4,7 @@ import { BaseResponse } from '../../shared/infrastructure/base-response';
 import { SensorNode } from '../domain/model/sensor-node.entity';
 import { SensorNodeResource } from './sensor-node-response';
 import { SensorNodeAssembler } from './sensor-node-assembler';
-import { environment } from '../../../enviroment/enviroment';
+import { environment } from '../../../enviroment/environment';
 
 export class SensorNodeApiEndpoint extends BaseApiEndpoint
 <SensorNode,
