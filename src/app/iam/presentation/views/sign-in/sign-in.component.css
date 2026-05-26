@@ -1,0 +1,204 @@
+.sign-in-page {
+  min-height: 100vh;
+  background: #f3f3f5;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* DECORATION */
+
+/* DECORATIVE IMAGES */
+
+.corner {
+  position: absolute;
+
+  width:  980px;
+  height: 980px;
+
+  background-image: url("/ventix-lines.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  opacity: 0.95;
+}
+
+.top-left {
+  top: -535px;
+  left: -320px;
+  transform: rotate(180deg);
+}
+
+.bottom-right {
+  right: -320px;
+  bottom: -530px;
+
+}
+
+/* LOGIN BOX */
+
+.login-container {
+  position: relative;
+  z-index: 2;
+
+  width: 360px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* USER ICON */
+
+.user-icon {
+  margin-bottom: 12px;
+}
+
+.head {
+  width: 70px;
+  height: 70px;
+
+  background: black;
+  border-radius: 50%;
+
+  margin: auto;
+}
+
+.body {
+  width: 90px;
+  height: 50px;
+
+  background: black;
+
+  border-radius: 50px 50px 0 0;
+
+  margin-top: -6px;
+}
+
+.login-container h1 {
+  margin-bottom: 30px;
+
+  font-size: 42px;
+  font-weight: 400;
+}
+
+/* FORM */
+
+.login-form {
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  margin-bottom: 6px;
+
+  font-size: 16px;
+}
+
+.input-group input {
+  height: 34px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #dddddd;
+
+  padding: 0 14px;
+
+  outline: none;
+}
+
+/* BUTTON */
+
+.sign-in-button {
+  display: block;
+
+  margin: 20px auto 0;
+
+  width: 120px;
+  height: 38px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #2d8ac4;
+  color: white;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* REGISTER */
+
+.register-section {
+  margin-top: 24px;
+
+  font-size: 13px;
+}
+
+.register-section a {
+  margin-left: 6px;
+
+  text-decoration: none;
+
+  color: #2d8ac4;
+}
+
+/* SOCIAL */
+
+.social-section {
+  margin-top: 24px;
+
+  text-align: center;
+}
+
+.social-section p {
+  margin-bottom: 14px;
+
+  font-size: 13px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.social-icons img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+
+  cursor: pointer;
+}
+
+.password-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 6px;
+}
+
+.password-header a {
+  text-decoration: none;
+
+  color: #4b4b4b;
+
+  font-size: 13px;
+}

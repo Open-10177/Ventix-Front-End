@@ -1,0 +1,165 @@
+.sign-up-page {
+  min-height: 100vh;
+  background: #f3f3f5;
+  position: relative;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background-image {
+  position: absolute;
+  inset: 0;
+  background-image: url("/ventix-lines.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 760px;
+  opacity: 0.35;
+}
+
+.language-icon {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.sign-up-container {
+  width: 1100px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-section h1 {
+  font-size: 48px;
+  margin: 0 0 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.input-group label {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.input-group input {
+  width: 430px;
+  height: 32px;
+  border-radius: 20px;
+  border: 2px solid #1f5d83;
+  background: #bdd4df;
+  padding: 0 14px;
+  outline: none;
+}
+
+.register-button {
+  margin-top: 16px;
+  margin-left: 150px;
+  border: none;
+  border-radius: 20px;
+  background: #0d5478;
+  color: white;
+  padding: 8px 18px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.photo-box {
+  width: 350px;
+  height: 480px;
+  background: #378fc5;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-box::before {
+  content: "";
+  position: absolute;
+  inset: 58px 38px;
+  border: 3px dashed white;
+}
+
+.photo-box p,
+.photo-box span {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.photo-box p {
+  font-size: 28px;
+}
+
+.photo-box span {
+  font-size: 50px;
+}
+
+.language-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-card {
+  width: 430px;
+  background: #3caabd;
+  border-radius: 38px;
+  padding: 24px 34px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  position: relative;
+}
+
+.modal-card h2 {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.close-button {
+  position: absolute;
+  top: 18px;
+  right: 26px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.line {
+  height: 2px;
+  background: white;
+  margin: 12px 0 18px;
+}
+
+.language-option {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin: 18px 0;
+  cursor: pointer;
+}
