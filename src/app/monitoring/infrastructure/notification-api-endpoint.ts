@@ -6,17 +6,15 @@ import { NotificationResource } from './notification-response';
 import { NotificationAssembler } from './notification-assembler';
 import { environment } from '../../../enviroment/enviroment';
 
-export class NotificationApiEndpoint extends BaseApiEndpoint
-< Notification,
+export class NotificationApiEndpoint extends BaseApiEndpoint<
+  Notification,
   NotificationResource,
   BaseResponse,
-NotificationAssembler
+  NotificationAssembler
 > {
   constructor(http: HttpClient) {
-    super(
-      http,
-      `${environment.baseUrl}${environment.monitoringAlertsEndpointPath}`,
-      new NotificationAssembler()
-    );
+    super(http, environment.baseUrl + environment.monitoringAlertsEndpointPath, new NotificationAssembler());
   }
 }
+
+

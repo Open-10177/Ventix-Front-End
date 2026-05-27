@@ -1,6 +1,7 @@
 import { BaseResource } from '../../shared/infrastructure/base-response';
 
 export interface NotificationResource extends BaseResource {
+  id: number;
   title: string;
   description: string;
   action: string;
@@ -8,3 +9,5 @@ export interface NotificationResource extends BaseResource {
   time: string;
   icon: string;
 }
+
+export type NotificationResponse = NotificationResource[];
