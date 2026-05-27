@@ -21,5 +21,6 @@ export class NotificationApiEndpoint extends BaseApiEndpoint<
    */
   constructor(http: HttpClient) {
     super(http, environment.baseUrl + environment.monitoringAlertsEndpointPath, new NotificationAssembler());
+
   }
 }
