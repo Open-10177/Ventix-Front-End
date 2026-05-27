@@ -29,6 +29,6 @@ export class NotificationAssembler implements BaseAssembler<Notification, Notifi
   }
 
   toEntitiesFromResponse(response: NotificationResponse): Notification[] {
-    return response.notifications.map(resource => this.toEntityFromResource(resource as NotificationResource));
+    return response.alerts.map(resource => this.toEntityFromResource(resource as NotificationResource));
   }
 }
