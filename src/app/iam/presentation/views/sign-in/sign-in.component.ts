@@ -29,7 +29,6 @@ export class SignInComponent {
         }
 
         localStorage.setItem('currentUser', JSON.stringify(user));
-        alert('Inicio de sesión correcto');
         this.router.navigate(['/home']);
       },
       error: (error) => {

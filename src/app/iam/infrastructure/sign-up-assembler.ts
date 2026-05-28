@@ -23,6 +23,7 @@ export class SignUpAssembler implements BaseAssembler<UserEntity, SignUpResource
       lastName: entity.lastName,
       phone: entity.phone,
       email: entity.email,
+      password: entity.password,
       role: entity.role,
       photoUrl: entity.photoUrl,
     } as SignUpResource;

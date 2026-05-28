@@ -111,6 +111,29 @@
   font-size: 50px;
 }
 
+.photo-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-box input[type="file"] {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+
+  cursor: pointer;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 20px;
+}
+
 .language-modal {
   position: absolute;
   inset: 0;

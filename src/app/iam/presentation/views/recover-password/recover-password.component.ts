@@ -85,14 +85,14 @@ export class RecoverPasswordComponent {
       return;
     }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[_#$%]).{6,}$/;
+    const passwordRegex =   /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
 
     if (!passwordRegex.test(this.newPassword)) {
       alert(
         'La contraseña debe tener:\n' +
           '- Una mayúscula\n' +
           '- Un número\n' +
-          '- Un símbolo (_ # $ %)',
+          '- Un caracter especial'
       );
 
       return;

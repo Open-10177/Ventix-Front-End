@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { IamApi } from '../../../infrastructure/iam-api';
@@ -24,6 +24,7 @@ export class SignUpComponent {
   email = '';
   password = '';
   confirmPassword = '';
+  photoUrl = '';
 
   constructor() {
     this.translate.setDefaultLang('en');
@@ -45,9 +46,39 @@ export class SignUpComponent {
     this.closeLanguageModal();
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.photoUrl = reader.result as string;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   register(): void {
     if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match');
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
+
+    if (!passwordRegex.test(this.password)) {
+      alert(
+        'La contraseña debe tener:\n' +
+          '- Una mayúscula\n' +
+          '- Un número\n' +
+          '- Un carácter especial',
+      );
       return;
     }
 
@@ -59,7 +90,7 @@ export class SignUpComponent {
       email: this.email,
       password: this.password,
       role: 'user',
-      photoUrl: '',
+      photoUrl: this.photoUrl,
     });
 
     this.iamApi.signUp(user).subscribe({

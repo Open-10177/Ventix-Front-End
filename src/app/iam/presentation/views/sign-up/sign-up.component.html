@@ -124,11 +124,27 @@
 
       <div class="photo-box">
 
-        <p>
-          {{ 'signup.photo' | translate }}
-        </p>
+        @if (photoUrl) {
 
-        <span>↓</span>
+          <img
+            [src]="photoUrl"
+            alt="Profile Photo"
+            class="preview-image">
+
+        } @else {
+
+          <p>
+            {{ 'signup.photo' | translate }}
+          </p>
+
+          <span>↓</span>
+
+        }
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)">
 
       </div>
 
