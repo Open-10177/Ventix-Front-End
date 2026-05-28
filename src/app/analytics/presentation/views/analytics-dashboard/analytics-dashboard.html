@@ -4,27 +4,141 @@
 
     <div class="header-left">
 
-      <button class="back-btn" (click)="goBack()">←</button>
+      <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ←
+
+      </button>
 
       <h1>Historial de datos</h1>
 
     </div>
 
     <div class="header-actions">
-      <button class="icon-btn">⚙️</button>
-      <button class="icon-btn">🔔</button>
-      <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar" />
+
+      <button class="icon-btn">
+
+        ⚙️
+
+      </button>
+
+      <mat-list-item
+        class="nav-btn"
+        title="Notificaciones"
+        (click)="goToNotifications()">
+
+        <mat-icon
+          [matBadge]="store.notificationCount()"
+          matBadgeColor="warn">
+
+          notifications
+
+        </mat-icon>
+
+      </mat-list-item>
+
+      <img
+        src="https://i.pravatar.cc/36"
+        alt="avatar"
+        class="avatar" />
 
     </div>
-
 
   </header>
 
   <div class="actions">
 
-    <button class="btn btn-teal">Últimos 30 días</button>
-    <button class="btn btn-teal">Elegir fecha</button>
-    <button class="btn btn-dark">Solicitar reporte</button>
+    <div class="range-dropdown">
+
+      <button
+        class="btn btn-teal"
+        type="button"
+        (click)="toggleRangeMenu()">
+
+        {{ selectedRangeLabel }}
+
+      </button>
+
+      @if (showRangeMenu) {
+
+        <div class="range-menu">
+
+          <button
+            type="button"
+            (click)="selectRange('Última semana')">
+
+            Última semana
+
+          </button>
+
+          <button
+            type="button"
+            (click)="selectRange('Últimos 15 días')">
+
+            Últimos 15 días
+
+          </button>
+
+          <button
+            type="button"
+            (click)="selectRange('Últimos 30 días')">
+
+            Últimos 30 días
+
+          </button>
+
+          <button
+            type="button"
+            (click)="selectRange('Últimos 3 meses')">
+
+            Últimos 3 meses
+
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+    <div class="date-picker-container">
+
+      <button
+        class="btn btn-teal"
+        type="button"
+        (click)="toggleCalendar()">
+
+        Elegir fecha
+
+      </button>
+
+      @if (showCalendar) {
+
+        <div class="calendar-popup">
+
+          <input
+            type="date"
+            (change)="onDateChange($event)">
+
+        </div>
+
+      }
+
+    </div>
+
+    <input
+      #dateInput
+      class="hidden-date-input"
+      type="date"
+      (change)="onDateChange($event)">
+
+    <button class="btn btn-dark">
+
+      Solicitar reporte
+
+    </button>
 
   </div>
 
@@ -35,18 +149,25 @@
       <div class="card">
 
         <p class="card-title">
+
           {{ kpi.title }}
+
         </p>
 
         <p class="card-value">
+
           {{ kpi.value }}
+
         </p>
 
         <p class="card-footer">
+
           {{ kpi.status }}
+
         </p>
 
       </div>
+
     }
 
   </section>
@@ -58,12 +179,19 @@
       <thead>
 
       <tr>
+
         <th>Fecha</th>
+
         <th>Zona</th>
+
         <th>Humedad</th>
+
         <th>CO₂</th>
+
         <th>Temperatura</th>
+
         <th>Acción del sistema</th>
+
       </tr>
 
       </thead>
@@ -87,6 +215,7 @@
             <td>{{ record.action }}</td>
 
           </tr>
+
         }
 
       </tbody>

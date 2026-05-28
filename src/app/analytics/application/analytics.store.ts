@@ -20,6 +20,7 @@ export class AnalyticsStore {
   readonly historyCount = computed(() => this.historyRecords().length);
   readonly loading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
+  readonly notificationCount = computed(() => 4);
 
   constructor(private analyticsApi: AnalyticsApi) {
     this.loadKpis();
@@ -125,4 +126,5 @@ export class AnalyticsStore {
 
     return fallback;
   }
+
 }
