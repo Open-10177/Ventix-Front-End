@@ -2,13 +2,14 @@
   "signup": {
     "title": "Register",
     "name": "Name",
-    "lastname": "Last Name",
+    "lastname": "Last name",
     "number": "Number",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm Password",
+    "confirmPassword": "Confirm password",
     "button": "Register",
-    "photo": "Insert a photo",
+    "photo": "Choose++ a photo",
+
     "language": "Choose language",
     "spanish": "Spanish",
     "english": "English"

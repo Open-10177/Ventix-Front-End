@@ -36,7 +36,8 @@
           <input
             type="text"
             [(ngModel)]="name"
-            name="name">
+            name="name"
+            title="Name">
 
         </div>
 
@@ -49,7 +50,8 @@
           <input
             type="text"
             [(ngModel)]="lastName"
-            name="lastName">
+            name="lastName"
+            title="Last name">
 
         </div>
 
@@ -62,7 +64,8 @@
           <input
             type="text"
             [(ngModel)]="phone"
-            name="phone">
+            name="phone"
+            title="Phone">
 
         </div>
 
@@ -75,7 +78,8 @@
           <input
             type="email"
             [(ngModel)]="email"
-            name="email">
+            name="email"
+            title="Email">
 
         </div>
 
@@ -88,7 +92,8 @@
           <input
             type="password"
             [(ngModel)]="password"
-            name="password">
+            name="password"
+            title="Pasword">
 
         </div>
 
@@ -101,7 +106,8 @@
           <input
             type="password"
             [(ngModel)]="confirmPassword"
-            name="confirmPassword">
+            name="confirmPassword"
+            title="Confirm password">
 
         </div>
 
@@ -144,6 +150,7 @@
         <input
           type="file"
           accept="image/*"
+          title="Choose photo"
           (change)="onFileSelected($event)">
 
       </div>
