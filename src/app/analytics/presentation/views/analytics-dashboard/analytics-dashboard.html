@@ -1,227 +1,98 @@
 <div class="page">
 
+  <!-- ── Header ── -->
   <header class="page-header">
-
     <div class="header-left">
-
-      <button
-        class="back-btn"
-        (click)="goBack()">
-
-        ←
-
+      <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
       </button>
-
-      <h1>Historial de datos</h1>
-
+      <h1>{{ t('an.title') }}</h1>
     </div>
-
-    <div class="header-actions">
-
-      <button class="icon-btn">
-
-        ⚙️
-
+    <div class="header-right">
+      <button type="button" mat-icon-button routerLink="/settings" class="header-btn">
+        <mat-icon>settings</mat-icon>
       </button>
-
-      <mat-list-item
-        class="nav-btn"
-        title="Notificaciones"
-        (click)="goToNotifications()">
-
-        <mat-icon
-          [matBadge]="store.notificationCount()"
-          matBadgeColor="warn">
-
-          notifications
-
-        </mat-icon>
-
-      </mat-list-item>
-
-      <img
-        src="https://i.pravatar.cc/36"
-        alt="avatar"
-        class="avatar" />
-
+      <button type="button" mat-icon-button routerLink="/monitoring/notifications" class="header-btn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/settings" class="avatar-btn">
+        <img src="https://i.pravatar.cc/40" alt="avatar" class="avatar" />
+      </button>
     </div>
-
   </header>
 
+  <!-- ── Action buttons ── -->
   <div class="actions">
+    <button type="button" mat-flat-button class="btn-period">{{ t('an.last30') }}</button>
 
-    <div class="range-dropdown">
+    <!-- Hidden input + datepicker -->
+    <input class="date-input-hidden" [matDatepicker]="picker"
+           [(ngModel)]="selectedDate" title="Elegir fecha" />
+    <mat-datepicker #picker></mat-datepicker>
 
-      <button
-        class="btn btn-teal"
-        type="button"
-        (click)="toggleRangeMenu()">
-
-        {{ selectedRangeLabel }}
-
-      </button>
-
-      @if (showRangeMenu) {
-
-        <div class="range-menu">
-
-          <button
-            type="button"
-            (click)="selectRange('Última semana')">
-
-            Última semana
-
-          </button>
-
-          <button
-            type="button"
-            (click)="selectRange('Últimos 15 días')">
-
-            Últimos 15 días
-
-          </button>
-
-          <button
-            type="button"
-            (click)="selectRange('Últimos 30 días')">
-
-            Últimos 30 días
-
-          </button>
-
-          <button
-            type="button"
-            (click)="selectRange('Últimos 3 meses')">
-
-            Últimos 3 meses
-
-          </button>
-
-        </div>
-
-      }
-
-    </div>
-
-    <div class="date-picker-container">
-
-      <button
-        class="btn btn-teal"
-        type="button"
-        (click)="toggleCalendar()">
-
-        Elegir fecha
-
-      </button>
-
-      @if (showCalendar) {
-
-        <div class="calendar-popup">
-
-          <input
-            type="date"
-            (change)="onDateChange($event)">
-
-        </div>
-
-      }
-
-    </div>
-
-    <input
-      #dateInput
-      class="hidden-date-input"
-      type="date"
-      (change)="onDateChange($event)">
-
-    <button class="btn btn-dark">
-
-      Solicitar reporte
-
+    <button type="button" mat-stroked-button class="btn-date" (click)="picker.open()">
+      <mat-icon>calendar_today</mat-icon>
+      {{ t('an.pickDate') }}
     </button>
 
+    <button type="button" mat-flat-button class="btn-report">
+      <mat-icon>description</mat-icon>
+      {{ t('an.requestReport') }}
+    </button>
   </div>
 
-  <section class="stats-grid">
-
+  <!-- ── KPI cards ── -->
+  <div class="kpi-grid">
     @for (kpi of store.kpis(); track kpi.id) {
-
-      <div class="card">
-
-        <p class="card-title">
-
-          {{ kpi.title }}
-
-        </p>
-
-        <p class="card-value">
-
-          {{ kpi.value }}
-
-        </p>
-
-        <p class="card-footer">
-
-          {{ kpi.status }}
-
-        </p>
-
-      </div>
-
+      <mat-card class="kpi-card">
+        <mat-card-content>
+          <p class="kpi-title">{{ kpi.title }}</p>
+          <p class="kpi-value">{{ kpi.value }}</p>
+          <mat-divider />
+          <p class="kpi-status">{{ kpi.status }}</p>
+        </mat-card-content>
+      </mat-card>
     }
+  </div>
 
-  </section>
+  <!-- ── History table ── -->
+  <mat-card class="table-card">
+    <mat-table [dataSource]="tableData" class="history-table">
 
-  <section class="table-container">
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef>{{ t('an.date') }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.date }}</mat-cell>
+      </ng-container>
 
-    <table>
+      <ng-container matColumnDef="zone">
+        <mat-header-cell *matHeaderCellDef>{{ t('an.zone') }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.zone }}</mat-cell>
+      </ng-container>
 
-      <thead>
+      <ng-container matColumnDef="humidity">
+        <mat-header-cell *matHeaderCellDef>{{ t('an.humidity') }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.humidity }}</mat-cell>
+      </ng-container>
 
-      <tr>
+      <ng-container matColumnDef="co2">
+        <mat-header-cell *matHeaderCellDef>CO₂</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.co2 }}</mat-cell>
+      </ng-container>
 
-        <th>Fecha</th>
+      <ng-container matColumnDef="temperature">
+        <mat-header-cell *matHeaderCellDef>{{ t('an.temperature') }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.temperature }}</mat-cell>
+      </ng-container>
 
-        <th>Zona</th>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>{{ t('an.systemAction') }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.action }}</mat-cell>
+      </ng-container>
 
-        <th>Humedad</th>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-        <th>CO₂</th>
-
-        <th>Temperatura</th>
-
-        <th>Acción del sistema</th>
-
-      </tr>
-
-      </thead>
-
-      <tbody>
-
-        @for (record of store.historyRecords(); track record.id) {
-
-          <tr>
-
-            <td>{{ record.date }}</td>
-
-            <td>{{ record.zone }}</td>
-
-            <td>{{ record.humidity }}</td>
-
-            <td>{{ record.co2 }}</td>
-
-            <td>{{ record.temperature }}</td>
-
-            <td>{{ record.action }}</td>
-
-          </tr>
-
-        }
-
-      </tbody>
-
-    </table>
-
-  </section>
+    </mat-table>
+  </mat-card>
 
 </div>
