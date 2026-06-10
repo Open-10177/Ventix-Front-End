@@ -3,13 +3,18 @@
   <!-- Sidebar -->
   <mat-sidenav mode="side" opened class="sidebar">
     <div class="sidebar-logo">
-      <img src="/ventixlogo.jpg" alt="Ventix" width="70"/>
+      <img src="/ventix-lines.png" alt="Ventix" width="70"/>
     </div>
 
     <mat-nav-list class="sidebar-nav">
       <mat-list-item class="nav-btn active" title="Inicio">
         <mat-icon>home</mat-icon>
       </mat-list-item>
+
+      <mat-list-item class="nav-btn" title="Payment" (click)="goToPayment()">
+        <mat-icon>payment</mat-icon>
+      </mat-list-item>
+
       <mat-list-item class="nav-btn" title="Notificaciones" (click)="goToNotifications()">
         <mat-icon [matBadge]="store.notificationCount()" matBadgeColor="warn">notifications</mat-icon>
       </mat-list-item>
@@ -117,27 +122,19 @@
       </mat-card-actions>
     </mat-card>
 
-    <!-- Funciones principales -->
     <mat-card class="functions-card">
       <mat-card-content>
-        <mat-nav-list>
-          <mat-list-item disabled>
-            <mat-icon matListItemIcon>apps</mat-icon>
-            <span matListItemTitle>Funciones principales</span>
-          </mat-list-item>
-          <mat-divider/>
-          <mat-list-item (click)="goToHistory()">
-            <mat-icon matListItemIcon>history</mat-icon>
-            <span matListItemTitle>Historial de datos</span>
-            <mat-icon matListItemMeta>chevron_right</mat-icon>
-          </mat-list-item>
-          <mat-divider/>
-          <mat-list-item (click)="goToThresholds()">
-            <mat-icon matListItemIcon>tune</mat-icon>
-            <span matListItemTitle>Configuración de los umbrales</span>
-            <mat-icon matListItemMeta>chevron_right</mat-icon>
-          </mat-list-item>
-        </mat-nav-list>
+        <p class="functions-title">Funciones principales</p>
+        <button class="function-btn" (click)="goToHistory()">
+          <mat-icon>history</mat-icon>
+          <span>Historial de datos</span>
+          <mat-icon class="arrow">chevron_right</mat-icon>
+        </button>
+        <button class="function-btn" (click)="goToThresholds()">
+          <mat-icon>tune</mat-icon>
+          <span>Configuración de los umbrales</span>
+          <mat-icon class="arrow">chevron_right</mat-icon>
+        </button>
       </mat-card-content>
     </mat-card>
 

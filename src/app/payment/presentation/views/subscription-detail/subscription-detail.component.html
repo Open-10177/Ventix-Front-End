@@ -1,0 +1,46 @@
+<section class="subscription-page">
+  <header>
+    <p class="eyebrow">Subscription</p>
+    <h1>Your current plan</h1>
+  </header>
+
+  @if (store.subscription()) {
+    <article class="subscription-card">
+      <span class="badge">{{ getPlanBadge() }}</span>
+
+      <h2>{{ store.subscription()?.planType }}</h2>
+
+      <dl>
+        <div>
+          <dt>Status</dt>
+          <dd>{{ store.subscription()?.status }}</dd>
+        </div>
+
+        <div>
+          <dt>Renews at</dt>
+          <dd>{{ store.subscription()?.renewsAt }}</dd>
+        </div>
+
+        <div>
+          <dt>Stripe ID</dt>
+          <dd>{{ store.subscription()?.stripeSubscriptionId }}</dd>
+        </div>
+      </dl>
+
+      <div class="actions">
+        <button type="button" class="secondary" (click)="goToInvoices()">
+          View invoices
+        </button>
+
+        <button type="button" class="danger" (click)="onCancel()">
+          Cancel subscription
+        </button>
+      </div>
+    </article>
+  } @else {
+    <article class="empty-state">
+      <p>You do not have an active subscription yet.</p>
+      <button type="button" (click)="goToPlans()">Choose a plan</button>
+    </article>
+  }
+</section>

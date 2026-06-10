@@ -27,6 +27,7 @@ export class LayoutComponent {
     { link: '/home',       label: 'option.home' },
     { link: '/about',      label: 'option.about' },
     { link: '/devices',    label: 'option.devices' },
-    { link: '/monitoring', label: 'option.monitoring' }
+    { link: '/monitoring', label: 'option.monitoring' },
+    { link: '/payment',    label: 'option.payment' }
   ];
 }

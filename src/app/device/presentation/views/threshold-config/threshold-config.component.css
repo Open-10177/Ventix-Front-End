@@ -18,30 +18,119 @@ h1 { font-size: 40px; font-weight: 400; text-align: center; margin: 8px 0 24px; 
   gap: 20px;
 }
 .config-card.blue { background: #3ab5c6; color: white; }
+.config-card.chart-card { background: white; color: #333; }
 
-.card-row { display: flex; align-items: center; gap: 12px; }
 .card-label { font-size: 16px; font-weight: 500; }
 .card-label.bold { font-size: 17px; font-weight: 700; }
+.card-row { display: flex; align-items: center; gap: 12px; }
 .battery-icon { font-size: 28px; }
 
-.mode-item { font-size: 15px; opacity: 0.9; padding: 4px 0; }
+/* Battery */
+.battery-section { display: flex; flex-direction: column; gap: 10px; }
+.battery-bar-wrap { display: flex; align-items: center; gap: 10px; }
+.battery-bar { flex: 1; height: 10px; background: rgba(255,255,255,0.3); border-radius: 8px; overflow: hidden; }
+.battery-fill { height: 100%; background: white; border-radius: 8px; transition: width 0.4s; }
+.battery-pct { font-size: 15px; font-weight: 600; min-width: 36px; }
 
-.setting-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 15px;
+/* Modes */
+.modes-section { display: flex; flex-direction: column; gap: 10px; }
+.mode-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; padding: 8px 12px;
+  border-radius: 12px; background: rgba(255,255,255,0.15);
 }
-.setting-value { font-size: 22px; font-weight: 500; }
+.mode-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.mode-on .mode-dot { background: #a8f0b0; }
+.mode-off .mode-dot { background: rgba(255,255,255,0.4); }
+.mode-badge { margin-left: auto; font-size: 12px; font-weight: 700; }
+.mode-on .mode-badge { color: #a8f0b0; }
+.mode-off .mode-badge { color: rgba(255,255,255,0.6); }
+.node-id { font-size: 13px; opacity: 0.6; margin-top: auto; }
 
-.chart-placeholder {
-  flex: 1.2;
-  background: #aaa;
-  border-radius: 16px;
+/* Chart */
+.chart-title { margin-bottom: 8px; color: #222; }
+.chart-bars { display: flex; flex-direction: column; gap: 20px; flex: 1; justify-content: center; }
+.bar-group { display: flex; flex-direction: column; gap: 6px; }
+.bar-label { font-size: 13px; color: #666; }
+.bar-track { width: 100%; height: 14px; background: #eee; border-radius: 8px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 8px; transition: width 0.5s; }
+.bar-fill.temp     { background: #f97316; }
+.bar-fill.co2      { background: #8b5cf6; }
+.bar-fill.humidity { background: #3b82f6; }
+.bar-value { font-size: 15px; font-weight: 600; color: #333; }
+.chart-timestamp { font-size: 12px; color: #aaa; margin-top: auto; }
+.no-data { color: #aaa; text-align: center; margin: auto; font-size: 15px; }
+
+/* Settings (right card) */
+.setting-item { display: flex; flex-direction: column; gap: 6px; }
+.setting-label { font-size: 14px; opacity: 0.85; }
+.setting-bar-wrap { width: 100%; }
+.setting-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.3); border-radius: 8px; overflow: hidden; }
+.setting-fill { height: 100%; background: white; border-radius: 8px; transition: width 0.4s; }
+.setting-value { font-size: 22px; font-weight: 600; }
+
+/* Mode buttons */
+.mode-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 64px;
-  opacity: 0.5;
+  gap: 10px;
+  width: 100%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-btn.active {
+  background: rgba(255,255,255,0.28);
+  border-color: rgba(255,255,255,0.6);
+}
+.mode-btn .mode-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+.mode-btn.active .mode-dot { background: #a8f0b0; }
+.mode-badge { margin-left: auto; font-size: 12px; font-weight: 700; color: #a8f0b0; }
+
+/* Sliders */
+.setting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.slider {
+  width: 100%;
+  --mdc-slider-active-track-color: white;
+  --mdc-slider-inactive-track-color: rgba(255,255,255,0.3);
+  --mdc-slider-handle-color: white;
+  --mdc-slider-label-container-color: white;
+}
+
+.zone-selector-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.zone-selector-row h1 {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.zone-select {
+  background: white;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 15px;
+  min-width: 160px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }

@@ -1,24 +1,45 @@
 {
+  "signup": {
+    "title": "Register",
+    "name": "Name",
+    "lastname": "Last name",
+    "number": "Number",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "button": "Register",
+    "photo": "Choose++ a photo",
+
+    "language": "Choose language",
+    "spanish": "Spanish",
+    "english": "English"
+  },
   "option": {
-  "home": "Home",
+    "home": "Home",
     "about": "About",
     "devices": "Devices",
     "monitoring": "Monitoring"
-},
+  },
   "home": {
-  "title": "Welcome to Ventix",
+    "title": "Welcome to Ventix",
     "content": "Monitor and manage your devices from one place."
-},
+  },
   "about": {
-  "title": "About Ventix",
+    "title": "About Ventix",
     "content": "Ventix is an IoT device management and monitoring platform."
-},
+  },
   "footer": {
-  "rights": "All rights reserved."
-},
+    "rights": "All rights reserved."
+  },
   "page-not-found": {
-  "title": "Page Not Found",
+    "title": "Page Not Found",
     "content": "The path <strong>/{{invalid_path}}</strong> does not exist.",
     "go-home": "Go Home"
-}
+  },
+  "payment": {
+    "title": "Payment",
+    "checkout": "Checkout",
+    "invoice": "Invoices",
+    "subscription": "Subscription"
+  }
 }

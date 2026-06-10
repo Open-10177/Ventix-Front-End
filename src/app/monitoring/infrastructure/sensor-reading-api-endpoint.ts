@@ -3,7 +3,7 @@ import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { SensorReading } from '../domain/model/sensor-reading.entity';
 import { SensorReadingResource, SensorReadingResponse } from './sensor-reading-response';
 import { SensorReadingAssembler } from './sensor-reading-assembler';
-import { environment } from '../../../enviroment/environment';
+import { environment } from '../../.././environment/environment';
 
 const sensorReadingEndpointUrl = `${environment.baseUrl}${environment.monitoringTelemetryEndpointPath}`;
 

@@ -1,0 +1,38 @@
+<section class="payment-page">
+  <header class="payment-header">
+    <p class="eyebrow">Payment</p>
+    <h1>Choose your Ventix plan</h1>
+    <p>Select the plan that best fits your monitoring needs.</p>
+  </header>
+
+  <div class="plan-grid">
+    @for (plan of store.plans(); track plan.planId) {
+      <article
+        class="plan-card"
+        [class.selected]="selectedPlan()?.planId === plan.planId"
+        (click)="onSelectPlan(plan)"
+      >
+        <div>
+          <h2>{{ plan.name }}</h2>
+          <p class="price">S/ {{ plan.price }}</p>
+        </div>
+
+        <ul>
+          @for (feature of plan.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+
+        <button type="button" (click)="onSelectPlan(plan)">
+          Select plan
+        </button>
+      </article>
+    }
+  </div>
+
+  <div class="actions">
+    <button type="button" [disabled]="!selectedPlan()" (click)="onCheckout()">
+      Continue to checkout
+    </button>
+  </div>
+</section>

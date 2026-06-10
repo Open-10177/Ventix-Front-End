@@ -1,0 +1,104 @@
+<section class="sign-in-page">
+
+  <!-- DECORATION -->
+
+  <div class="corner top-left"></div>
+  <div class="corner bottom-right"></div>
+
+  <!-- LOGIN CARD -->
+
+  <div class="login-container">
+
+    <!-- USER ICON -->
+
+    <div class="user-icon">
+      <div class="head"></div>
+      <div class="body"></div>
+    </div>
+
+    <h1>Sign in</h1>
+
+    <!-- FORM -->
+
+    <form class="login-form">
+
+      <div class="input-group">
+
+        <label>mail</label>
+
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email">
+
+      </div>
+
+      <div class="input-group">
+
+        <div class="password-header">
+
+          <label>Password</label>
+
+          <a routerLink="/iam/recover-password">
+            Forgot your password?
+          </a>
+
+        </div>
+
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password">
+
+      </div>
+
+      <!-- BUTTON -->
+
+      <button
+        type="button"
+        class="sign-in-button"
+        (click)="signIn()">
+        Sign in
+      </button>
+
+    </form>
+
+    <!-- LINKS -->
+
+    <div class="register-section">
+
+      <span>you don't have an account?</span>
+
+      <a routerLink="/iam/sign-up">
+        Sign Up
+      </a>
+
+    </div>
+
+    <!-- SOCIAL -->
+
+    <div class="social-section">
+
+      <p>Log-in with</p>
+
+      <div class="social-icons">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
+          alt="Google">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/0/747.png"
+          alt="Apple">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+          alt="Facebook">
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

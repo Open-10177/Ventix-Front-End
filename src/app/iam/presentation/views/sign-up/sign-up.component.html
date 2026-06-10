@@ -1,0 +1,209 @@
+<section class="sign-up-page">
+
+  <!-- BACKGROUND -->
+
+  <div class="background-image"></div>
+
+  <!-- LANGUAGE ICON -->
+
+  <button
+    class="language-icon"
+    type="button"
+    (click)="openLanguageModal()">
+
+    🌐
+
+  </button>
+
+  <!-- MAIN CONTENT -->
+
+  <div class="sign-up-container">
+
+    <!-- LEFT -->
+
+    <div class="form-section">
+
+      <h1>{{ 'signup.title' | translate }}</h1>
+
+      <form>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.name' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="name"
+            name="name"
+            title="Name">
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.lastname' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="lastName"
+            name="lastName"
+            title="Last name">
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.number' | translate }}
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="phone"
+            name="phone"
+            title="Phone">
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.email' | translate }}
+          </label>
+
+          <input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            title="Email">
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.password' | translate }}
+          </label>
+
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            title="Pasword">
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            {{ 'signup.confirmPassword' | translate }}
+          </label>
+
+          <input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            title="Confirm password">
+
+        </div>
+
+        <button
+          class="register-button"
+          type="button"
+          (click)="register()">
+
+          {{ 'signup.button' | translate }}
+
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="photo-section">
+
+      <div class="photo-box">
+
+        @if (photoUrl) {
+
+          <img
+            [src]="photoUrl"
+            alt="Profile Photo"
+            class="preview-image">
+
+        } @else {
+
+          <p>
+            {{ 'signup.photo' | translate }}
+          </p>
+
+          <span>↓</span>
+
+        }
+
+        <input
+          type="file"
+          accept="image/*"
+          title="Choose photo"
+          (change)="onFileSelected($event)">
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LANGUAGE MODAL -->
+
+  @if (showLanguageModal) {
+
+    <div class="language-modal">
+
+      <div class="modal-card">
+
+        <button
+          class="close-button"
+          type="button"
+          (click)="closeLanguageModal()">
+
+          ×
+
+        </button>
+
+        <h2>
+          {{ 'signup.language' | translate }}
+        </h2>
+
+        <div class="line"></div>
+
+        <button
+          type="button"
+          class="language-option"
+          (click)="changeLanguage('es')">
+
+          {{ 'signup.spanish' | translate }}
+
+        </button>
+
+        <button
+          type="button"
+          class="language-option"
+          (click)="changeLanguage('en')">
+
+          {{ 'signup.english' | translate }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>

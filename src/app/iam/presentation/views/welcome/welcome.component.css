@@ -1,0 +1,125 @@
+.welcome-page {
+  min-height: 100vh;
+  background: #f3f3f5;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CENTER CONTENT */
+
+.welcome-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  top: -10px;
+}
+
+.welcome-content p {
+  margin: 0 0 10px;
+
+  color: #2d8ac4;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.welcome-content h1 {
+  margin: 0 0 48px;
+
+  color: #456d8a;
+  font-size: 82px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+/* BUTTON */
+
+.connect-button {
+  display: inline-block;
+
+  background: #0d5478;
+  color: white;
+
+  text-decoration: none;
+
+  padding: 14px 44px;
+
+  border-radius: 30px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+.connect-button:hover {
+  background: #0a4665;
+}
+
+
+.corner {
+  position: absolute;
+
+  width:  980px;
+  height: 980px;
+
+  background-image: url("/ventix-lines.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  opacity: 0.95;
+}
+
+.top-left {
+  top: -535px;
+  left: -320px;
+  transform: rotate(180deg);
+}
+
+.bottom-right {
+  right: -320px;
+  bottom: -530px;
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .corner {
+    width: 300px;
+    height: 300px;
+  }
+
+  .top-left {
+    top: -80px;
+    left: -80px;
+  }
+
+  .bottom-right {
+    right: -80px;
+    bottom: -80px;
+  }
+
+  .welcome-content p {
+    font-size: 24px;
+  }
+
+  .welcome-content h1 {
+    font-size: 56px;
+  }
+
+  .connect-button {
+    padding: 12px 34px;
+    font-size: 16px;
+  }
+
+}
