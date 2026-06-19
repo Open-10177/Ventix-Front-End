@@ -1,0 +1,125 @@
+<div class="page">
+  <header class="page-header">
+    <button type="button" class="back-btn" (click)="goBack()">←</button>
+    <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
+    <div class="header-icons">
+      <button type="button" mat-icon-button routerLink="/settings" matTooltip="Configuración" class="header-btn">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/monitoring/notifications" matTooltip="Notificaciones" class="header-btn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/settings" class="avatar-btn">
+        <img [src]="avatarUrl" alt="avatar" class="avatar" />
+      </button>
+    </div>
+  </header>
+
+  <div class="settings-grid">
+
+    <!-- ── Profile card ── -->
+    <mat-card class="profile-card">
+      <mat-card-content class="profile-content">
+
+        <div class="profile-fields">
+          <!-- Email -->
+          <p class="field-label">{{ 'settings.changeEmail' | translate }}</p>
+          <mat-form-field appearance="outline" class="settings-field">
+            <input matInput [(ngModel)]="email"
+              placeholder="correo@ejemplo.com"
+              [readonly]="!emailEditing()" />
+            <button matIconSuffix mat-icon-button type="button"
+              [matTooltip]="emailEditing() ? 'Guardar' : 'Editar'"
+              (click)="toggleEmail()">
+              <mat-icon>{{ emailEditing() ? 'save' : 'edit' }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <!-- Password -->
+          <p class="field-label">{{ 'settings.changePassword' | translate }}</p>
+          <mat-form-field appearance="outline" class="settings-field">
+            <input matInput
+              [type]="passwordEditing() ? 'text' : 'password'"
+              [(ngModel)]="password"
+              placeholder="••••••••"
+              [readonly]="!passwordEditing()" />
+            <button matIconSuffix mat-icon-button type="button"
+              [matTooltip]="passwordEditing() ? 'Guardar' : 'Editar'"
+              (click)="togglePassword()">
+              <mat-icon>{{ passwordEditing() ? 'save' : 'edit' }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <button type="button" mat-flat-button class="dark-btn" (click)="saveProfile()">
+            {{ 'settings.saveChanges' | translate }}
+          </button>
+        </div>
+
+        <!-- Profile photo -->
+        <div class="profile-photo">
+          <div class="username-row">
+            @if (usernameEditing()) {
+              <input class="username-input" [(ngModel)]="username" title="Nombre de usuario" />
+            } @else {
+              <span class="username-text">{{ username }}</span>
+            }
+            <button type="button" mat-icon-button class="edit-icon-btn" (click)="toggleUsername()"
+              [matTooltip]="usernameEditing() ? 'Guardar' : 'Editar nombre'">
+              <mat-icon>{{ usernameEditing() ? 'save' : 'edit' }}</mat-icon>
+            </button>
+          </div>
+          <img [src]="avatarUrl" alt="Perfil" class="profile-img" />
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Language card ── -->
+    <mat-card class="language-card">
+      <mat-card-content class="language-content">
+        <p class="lang-title">{{ 'settings.chooseLanguage' | translate }}</p>
+        <mat-divider class="divider-white" />
+        @for (lang of languages; track lang.value) {
+          <button type="button"
+            class="lang-btn"
+            [class.lang-selected]="selectedLanguage === lang.value"
+            (click)="selectedLanguage = lang.value">
+            {{ ('settings.' + lang.value) | translate }}
+          </button>
+        }
+        <button type="button" mat-flat-button class="dark-btn lang-save" (click)="saveLanguage()">
+          {{ 'settings.change' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Plan card ── -->
+    <mat-card class="plan-card">
+      <mat-card-content class="plan-content">
+        <div class="plan-info">
+          <p class="plan-title">{{ 'settings.currentPlan' | translate }} <strong>{{ planName() }}</strong></p>
+          <ul class="plan-features">
+            @for (feature of planFeatures(); track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+          <button type="button" mat-flat-button class="dark-btn" (click)="changePlan()">
+            {{ 'settings.changePlan' | translate }}
+          </button>
+        </div>
+        <div class="plan-image"></div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Account actions ── -->
+    <div class="account-actions">
+      <button type="button" mat-stroked-button class="account-btn" (click)="changeAccount()">
+        {{ 'settings.changeAccount' | translate }}
+      </button>
+      <button type="button" mat-stroked-button class="account-btn logout-btn" (click)="logout()">
+        {{ 'settings.logout' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

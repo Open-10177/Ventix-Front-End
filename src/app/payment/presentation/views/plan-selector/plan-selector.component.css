@@ -1,0 +1,76 @@
+.page { padding: 28px 32px; background: #f0f2f5; min-height: 100vh; }
+
+.page-header { margin-bottom: 40px; }
+.page-header { display: flex; flex-direction: column; gap: 4px; }
+.back-btn { color: #1a3a5c; align-self: flex-start; margin-bottom: 8px; }
+h1 { font-size: 36px; font-weight: 300; color: #1a3a5c; margin: 0; }
+.subtitle { font-size: 15px; color: #888; margin: 0; }
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 620px;
+}
+
+.plan-card {
+  border-radius: 20px !important;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.12) !important; }
+.plan-card.featured {
+  border: 2px solid #1a3a5c !important;
+  box-shadow: 0 8px 24px rgba(26,58,92,0.2) !important;
+}
+
+.current-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: #4fc3a1;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.current-badge mat-icon { font-size: 14px !important; width: 14px !important; height: 14px !important; }
+
+.plan-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 28px 24px !important;
+  gap: 12px;
+}
+
+.plan-icon-wrap {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.plan-icon { font-size: 32px !important; width: 32px !important; height: 32px !important; }
+
+.plan-name { font-size: 22px; font-weight: 600; color: #1a3a5c; margin: 0; }
+
+.plan-price { display: flex; align-items: baseline; gap: 2px; }
+.price { font-size: 36px; font-weight: 300; color: #1a3a5c; }
+.period { font-size: 14px; color: #aaa; }
+
+.plan-divider { width: 100%; margin: 4px 0 !important; }
+
+.features-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.feature-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555; }
+.feature-icon { font-size: 16px !important; width: 16px !important; height: 16px !important; color: #3ab5c6; flex-shrink: 0; }
+
+.select-btn {
+  width: 100% !important;
+  color: white !important;
+  border-radius: 24px !important;
+  height: 44px !important;
+  font-size: 15px !important;
+  margin-top: 8px;
+}

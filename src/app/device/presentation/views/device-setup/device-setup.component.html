@@ -1,0 +1,46 @@
+<div class="page">
+  <header class="page-header">
+    <button type="button" class="back-btn" (click)="goBack()">←</button>
+  </header>
+
+  <h1>{{ 'device.deviceConnected' | translate }}</h1>
+
+  <div class="setup-content">
+    <mat-card class="setup-card">
+      <mat-card-content class="form-content">
+
+        <div class="image-upload" (click)="imgInput.click()">
+          @if (selectedImage) {
+            <img [src]="selectedImage" alt="Ambiente" class="preview-img" />
+          } @else {
+            <mat-icon class="upload-icon">download</mat-icon>
+            <span class="upload-text">{{ 'device.uploadAmbientImage' | translate }}</span>
+          }
+          <input type="file" #imgInput accept="image/*" title="Imagen del ambiente" class="hidden-input" (change)="onImageSelected($event)" />
+        </div>
+
+        <div class="field-label">{{ 'device.ambientName' | translate }}</div>
+        <mat-form-field appearance="outline" class="name-field">
+          <input matInput [(ngModel)]="zoneName" [placeholder]="'device.enterName' | translate" [attr.aria-label]="'device.ambientName' | translate" />
+          <mat-icon matSuffix>edit</mat-icon>
+        </mat-form-field>
+
+        <div class="field-label">{{ 'device.suggestions' | translate }}</div>
+        <div class="chips-row">
+          @for (s of suggestions; track s) {
+            <button
+              type="button"
+              class="chip-btn"
+              [class.chip-active]="zoneName === s"
+              (click)="selectSuggestion(s)"
+            >{{ s }}</button>
+          }
+        </div>
+
+        <button type="button" mat-flat-button color="primary" class="complete-btn" (click)="complete()" [disabled]="!zoneName.trim()">
+          {{ 'device.completed' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

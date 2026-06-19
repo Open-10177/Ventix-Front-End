@@ -1,0 +1,162 @@
+<div class="page">
+
+  <!-- Header -->
+  <header class="page-header">
+    <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="page-subtitle">{{ 'threshold.title' | translate }}</span>
+    <div class="header-icons">
+      <button type="button" mat-icon-button routerLink="/settings" class="header-btn">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/monitoring/notifications" class="header-btn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/settings" class="avatar-btn">
+        <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar" />
+      </button>
+    </div>
+  </header>
+
+  <!-- Zone selector -->
+  <div class="zone-selector-row">
+    <h1>{{ store.selectedThreshold()?.zone ?? ('threshold.zone' | translate) }}</h1>
+    <mat-select class="zone-select" [(ngModel)]="selectedZone" (ngModelChange)="onZoneChange($event)">
+      @for (zone of zones(); track zone) {
+        <mat-option [value]="zone">{{ zone }}</mat-option>
+      }
+    </mat-select>
+  </div>
+
+  <div class="cards-row">
+
+    <!-- ── Left card: battery + modes ── -->
+    <div class="config-card blue">
+      @if (store.selectedThreshold(); as cfg) {
+
+        <div class="battery-section">
+          <div class="card-row">
+            <span class="card-label">{{ 'threshold.nodeBattery' | translate }}</span>
+            <mat-icon class="battery-icon">battery_full</mat-icon>
+          </div>
+          <div class="battery-bar-wrap">
+            <div class="battery-bar">
+              <div class="battery-fill" [style.width.%]="getBatteryPct()"></div>
+            </div>
+            <span class="battery-pct">{{ getBatteryPct() }}%</span>
+          </div>
+        </div>
+
+        <div class="modes-section">
+          <div class="card-label modes-label">{{ 'threshold.operationMode' | translate }}</div>
+          <button type="button" class="mode-btn" [class.active]="activeMode === 'auto'" (click)="setMode('auto')">
+            <span class="mode-dot"></span>
+            <span>{{ 'threshold.autoMode' | translate }}</span>
+            @if (activeMode === 'auto') { <span class="mode-badge">ON</span> }
+          </button>
+          <button type="button" class="mode-btn" [class.active]="activeMode === 'manual'" (click)="setMode('manual')">
+            <span class="mode-dot"></span>
+            <span>{{ 'threshold.manualMode' | translate }}</span>
+            @if (activeMode === 'manual') { <span class="mode-badge">ON</span> }
+          </button>
+        </div>
+
+        <div class="node-id">{{ 'threshold.node' | translate }} #{{ cfg.nodeId }}</div>
+      }
+    </div>
+
+    <!-- ── Center card: readings chart ── -->
+    <div class="config-card chart-card">
+      @if (getZoneReading(); as reading) {
+        <div class="card-label bold chart-title">{{ 'threshold.currentReadings' | translate }} — {{ reading.zone }}</div>
+        <div class="chart-bars">
+
+          <div class="bar-group">
+            <span class="bar-label">
+              <mat-icon class="bar-icon temp-icon">thermostat</mat-icon>
+              {{ 'threshold.temp' | translate }}
+            </span>
+            <div class="bar-track">
+              <div class="bar-fill temp" [style.width.%]="getBarWidth(reading.temperature, 50)"></div>
+            </div>
+            <span class="bar-value">{{ reading.temperature }}°C</span>
+          </div>
+
+          <div class="bar-group">
+            <span class="bar-label">
+              <mat-icon class="bar-icon co2-icon">air</mat-icon>
+              CO₂
+            </span>
+            <div class="bar-track">
+              <div class="bar-fill co2" [style.width.%]="getBarWidth(reading.co2, 2000)"></div>
+            </div>
+            <span class="bar-value">{{ reading.co2 }} ppm</span>
+          </div>
+
+          <div class="bar-group">
+            <span class="bar-label">
+              <mat-icon class="bar-icon hum-icon">water_drop</mat-icon>
+              {{ 'threshold.humidity' | translate }}
+            </span>
+            <div class="bar-track">
+              <div class="bar-fill humidity" [style.width.%]="getBarWidth(reading.humidity, 100)"></div>
+            </div>
+            <span class="bar-value">{{ reading.humidity }}%</span>
+          </div>
+
+        </div>
+        <span class="chart-timestamp">{{ 'threshold.lastReading' | translate }}: {{ reading.timestamp | date:'HH:mm' }}</span>
+      } @else {
+        <div class="no-data">{{ 'threshold.noReadings' | translate }}</div>
+      }
+    </div>
+
+    <!-- ── Right card: sliders ── -->
+    <div class="config-card blue">
+      @if (store.selectedThreshold()) {
+        <div class="card-label bold">{{ 'threshold.configurations' | translate }}</div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">
+              <mat-icon class="setting-icon">thermostat</mat-icon>
+              {{ 'threshold.tempLimit' | translate }}
+            </span>
+            <span class="setting-value">{{ temperatureValue }}°C</span>
+          </div>
+          <mat-slider min="15" max="50" step="1" class="slider" [disabled]="activeMode === 'auto'">
+            <input matSliderThumb [(ngModel)]="temperatureValue" title="Temperatura límite">
+          </mat-slider>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">
+              <mat-icon class="setting-icon">cloud</mat-icon>
+              {{ 'threshold.co2Limit' | translate }}
+            </span>
+            <span class="setting-value">{{ co2Value }} ppm</span>
+          </div>
+          <mat-slider min="400" max="1400" step="50" class="slider" [disabled]="activeMode === 'auto'">
+            <input matSliderThumb [(ngModel)]="co2Value" title="Límite CO₂">
+          </mat-slider>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-header">
+            <span class="setting-label">
+              <mat-icon class="setting-icon">water_drop</mat-icon>
+              {{ 'threshold.humidity' | translate }}
+            </span>
+            <span class="setting-value">{{ ventilationValue }}%</span>
+          </div>
+          <mat-slider min="0" max="100" step="1" class="slider" [disabled]="activeMode === 'auto'">
+            <input matSliderThumb [(ngModel)]="ventilationValue" title="Humedad">
+          </mat-slider>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

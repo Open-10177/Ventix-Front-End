@@ -1,0 +1,120 @@
+<div class="main-content">
+
+  @if (store.loading()) {
+    <mat-progress-bar mode="indeterminate" color="primary" class="full-width"/>
+  }
+
+  @if (store.error()) {
+    <mat-card class="error-banner" appearance="outlined">
+      <mat-card-content>
+        <mat-icon color="warn">error_outline</mat-icon>
+        <span>{{ store.error() }}</span>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Greeting + sensors -->
+  <mat-card class="greeting-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'home.greeting' | translate }}, Martina Chavez</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="sensor-row">
+        <div class="sensor-item">
+          <mat-icon class="sensor-icon">thermostat</mat-icon>
+          <span class="sensor-value">
+            {{ store.sensorReadings()[0]?.temperature ?? '—' }}<sup>°C</sup>
+          </span>
+          <span class="sensor-label">{{ 'home.todayTemp' | translate }}</span>
+        </div>
+        <div class="sensor-item">
+          <mat-icon class="sensor-icon">cloud</mat-icon>
+          <span class="sensor-value">
+            {{ store.sensorReadings()[0]?.co2 ?? '—' }}<sub>ppm</sub>
+          </span>
+          <span class="sensor-label">CO₂</span>
+        </div>
+        <div class="sensor-item">
+          <mat-icon class="sensor-icon">water_drop</mat-icon>
+          <span class="sensor-value">
+            {{ store.sensorReadings()[0]?.humidity ?? '—' }}<sub>%</sub>
+          </span>
+          <span class="sensor-label">{{ 'home.todayHumidity' | translate }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button" mat-flat-button color="warn" class="panic-btn" (click)="triggerPanic()">
+        <mat-icon>crisis_alert</mat-icon>
+        {{ 'home.panicButton' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Ambientes -->
+  <mat-card class="environments-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'home.environments' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider/>
+    <mat-card-content>
+      <mat-list>
+        @for (env of store.environments(); track env.id) {
+          <mat-list-item class="env-item" (click)="goToEnvironment(env)">
+            <mat-icon matListItemIcon [color]="env.hasAlert ? 'warn' : 'primary'">
+              {{ env.hasAlert ? 'error' : 'check_circle' }}
+            </mat-icon>
+            <span matListItemTitle>{{ env.name }}</span>
+            <mat-icon matListItemMeta>chevron_right</mat-icon>
+          </mat-list-item>
+          <mat-divider/>
+        }
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button" mat-stroked-button color="primary" (click)="goToMap()">
+        <mat-icon>map</mat-icon>
+        {{ 'home.viewMap' | translate }}
+      </button>
+      <button type="button" mat-flat-button color="primary" (click)="goToRegister()">
+        <mat-icon>add_circle</mat-icon>
+        {{ 'home.addDevice' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Funciones principales -->
+  <mat-card class="functions-card">
+    <mat-card-content>
+      <p class="functions-title">{{ 'home.mainFunctions' | translate }}</p>
+      <button type="button" class="function-btn" (click)="goToHistory()">
+        <mat-icon>history</mat-icon>
+        <span>{{ 'home.dataHistory' | translate }}</span>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </button>
+      <button type="button" class="function-btn" (click)="goToThresholds()">
+        <mat-icon>tune</mat-icon>
+        <span>{{ 'home.thresholdConfig' | translate }}</span>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Fan usage -->
+  <mat-card class="fan-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'home.fanUsage' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'home.monthly' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @for (fan of store.fanUsage(); track fan.name) {
+        <div class="fan-row">
+          <span class="fan-name">{{ fan.name }}</span>
+          <mat-progress-bar mode="determinate" [value]="fan.pct" color="primary" class="fan-bar"/>
+          <span class="fan-pct">{{ fan.pct }}%</span>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+
+</div>

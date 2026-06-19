@@ -1,0 +1,43 @@
+.shell {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 70px;
+  background: #1a2a4a;
+  border-right: none;
+}
+
+.sidenav-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding-top: 16px;
+  gap: 4px;
+}
+
+.logo {
+  margin-bottom: 12px;
+}
+
+.nav-btn {
+  color: white;
+}
+
+.nav-active {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.avatar-btn {
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.avatar-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #3ab5c6;
+  object-fit: cover;
+}

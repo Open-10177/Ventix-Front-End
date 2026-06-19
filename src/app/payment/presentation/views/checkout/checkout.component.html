@@ -1,0 +1,147 @@
+<div class="page">
+
+  <header class="page-header">
+    <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ 'checkout.title' | translate }}</h1>
+  </header>
+
+  <div class="checkout-grid">
+
+    <!-- ── Métodos de pago ── -->
+    <mat-card class="pay-card">
+      <mat-card-content>
+        <p class="section-title">{{ 'checkout.paymentMethod' | translate }}</p>
+
+        <mat-button-toggle-group class="method-group" [value]="method()" (change)="setMethod($event.value)">
+          <mat-button-toggle value="card">
+            <mat-icon>credit_card</mat-icon> {{ 'checkout.card' | translate }}
+          </mat-button-toggle>
+          <mat-button-toggle value="yape">
+            <mat-icon>smartphone</mat-icon> Yape / Plin
+          </mat-button-toggle>
+          <mat-button-toggle value="paypal">
+            <mat-icon>account_balance_wallet</mat-icon> PayPal
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-divider class="div" />
+
+        <!-- Tarjeta -->
+        @if (method() === 'card') {
+          <div class="form">
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>{{ 'checkout.nameOnCard' | translate }}</mat-label>
+              <input matInput [(ngModel)]="cardName" [placeholder]="'checkout.asAppears' | translate" [attr.aria-label]="'checkout.nameOnCard' | translate" />
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>{{ 'checkout.cardNumber' | translate }}</mat-label>
+              <input matInput [(ngModel)]="cardNumber" maxlength="19" placeholder="0000 0000 0000 0000" />
+              <mat-icon matSuffix>credit_card</mat-icon>
+            </mat-form-field>
+
+            <div class="row">
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>{{ 'checkout.expiry' | translate }}</mat-label>
+                <input matInput [(ngModel)]="cardExpiry" maxlength="5" placeholder="MM/AA" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>CVV</mat-label>
+                <input matInput [(ngModel)]="cardCvv" maxlength="4" type="password" placeholder="123" />
+              </mat-form-field>
+            </div>
+          </div>
+        }
+
+        <!-- Yape / Plin -->
+        @if (method() === 'yape') {
+          <div class="form">
+            <div class="qr-box">
+              <mat-icon class="qr-icon">qr_code_2</mat-icon>
+              <p>{{ 'checkout.scanOrEnter' | translate }}</p>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>{{ 'checkout.phoneNumber' | translate }}</mat-label>
+              <input matInput [(ngModel)]="yapePhone" maxlength="9" placeholder="9XX XXX XXX" />
+              <mat-icon matSuffix>smartphone</mat-icon>
+            </mat-form-field>
+          </div>
+        }
+
+        <!-- PayPal -->
+        @if (method() === 'paypal') {
+          <div class="form paypal-box">
+            <mat-icon class="paypal-icon">account_balance_wallet</mat-icon>
+            <p>{{ 'checkout.redirectPaypal' | translate }}</p>
+          </div>
+        }
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Resumen del pedido ── -->
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p class="section-title">{{ 'checkout.summary' | translate }}</p>
+
+        <div class="summary-row">
+          <span>{{ 'checkout.plan' | translate }} {{ planName }}</span>
+          <span class="summary-price">{{ price }}{{ period }}</span>
+        </div>
+        <div class="summary-row muted">
+          <span>{{ 'checkout.igv' | translate }}</span>
+          <span>{{ 'checkout.included' | translate }}</span>
+        </div>
+
+        <mat-divider class="div" />
+
+        <div class="summary-row total">
+          <span>{{ 'checkout.total' | translate }}</span>
+          <span class="summary-price">{{ price }}{{ period }}</span>
+        </div>
+
+        <button type="button" mat-flat-button class="pay-btn"
+          [disabled]="!canPay || status() !== 'idle'"
+          (click)="pay()">
+          @if (status() === 'processing') {
+            <span class="btn-content">
+              <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+              {{ 'checkout.processing' | translate }}
+            </span>
+          } @else {
+            <span class="btn-content">
+              <mat-icon>lock</mat-icon>
+              {{ 'checkout.pay' | translate }} {{ price }}{{ period }}
+            </span>
+          }
+        </button>
+
+        <p class="secure-note">
+          <mat-icon>verified_user</mat-icon>
+          {{ 'checkout.securePayment' | translate }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <!-- ── Confirmación ── -->
+  @if (status() === 'done') {
+    <div class="overlay">
+      <mat-card class="success-card">
+        <div class="success-circle">
+          <mat-icon class="success-icon">check</mat-icon>
+        </div>
+        <h2>{{ 'checkout.paymentSuccess' | translate }}</h2>
+        <p>{{ 'checkout.planActivePrefix' | translate }} <strong>{{ planName }}</strong> {{ 'checkout.planActiveSuffix' | translate }}</p>
+        <button type="button" mat-flat-button class="finish-btn" (click)="finish()">
+          {{ 'common.continue' | translate }}
+        </button>
+      </mat-card>
+    </div>
+  }
+
+</div>

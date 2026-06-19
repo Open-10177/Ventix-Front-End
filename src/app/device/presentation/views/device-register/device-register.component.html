@@ -1,0 +1,29 @@
+<div class="page">
+  <header class="page-header">
+    <button type="button" class="back-btn" (click)="goBack()">←</button>
+  </header>
+
+  <h1>{{ 'device.registerTitle' | translate }}</h1>
+
+  <div class="options-row">
+    <mat-card class="option-card" (click)="goByQr()">
+      <mat-card-content class="option-content">
+        <div class="icon-circle">
+          <mat-icon class="option-icon">qr_code_scanner</mat-icon>
+        </div>
+        <p class="option-title">{{ 'device.viaQr' | translate }}</p>
+        <span class="option-sub">{{ 'device.choosePhoto' | translate }}</span>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="option-card" (click)="goByCode()">
+      <mat-card-content class="option-content">
+        <div class="icon-circle">
+          <mat-icon class="option-icon">barcode_reader</mat-icon>
+        </div>
+        <p class="option-title">{{ 'device.viaCode' | translate }}</p>
+        <span class="option-sub">{{ 'device.enterCodeSub' | translate }}</span>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

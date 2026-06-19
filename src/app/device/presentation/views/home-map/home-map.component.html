@@ -1,0 +1,68 @@
+<div class="page">
+
+  <!-- ── Header ── -->
+  <header class="page-header">
+    <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ 'device.mapTitle' | translate }}</h1>
+    <div class="header-right">
+      <button type="button" mat-icon-button routerLink="/settings" class="header-btn">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/monitoring/notifications" class="header-btn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button type="button" mat-icon-button routerLink="/settings" class="avatar-btn">
+        <img src="https://i.pravatar.cc/36" alt="avatar" class="avatar" />
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ── Floor plan ── -->
+    <mat-card class="floor-card">
+      <mat-card-content class="floor-content">
+        <img src="/mapa-hogar.png" alt="Mapa del hogar" class="floor-img" />
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Rooms panel ── -->
+    <mat-card class="rooms-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'device.house' | translate }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="battery-header">
+          <span class="col-label">{{ 'device.battery' | translate }}</span>
+        </div>
+        <mat-divider />
+
+        <mat-list>
+          @for (room of store.roomBatteries(); track room.id) {
+            <mat-list-item>
+              <span matListItemTitle class="room-name">{{ room.name }}</span>
+              <span matListItemMeta>
+                <mat-chip class="battery-chip"
+                  [style.background]="getBatteryColor(room.batteryPct)"
+                  disableRipple>
+                  {{ room.batteryPct }}%
+                </mat-chip>
+              </span>
+            </mat-list-item>
+            <mat-divider />
+          }
+        </mat-list>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button type="button" mat-flat-button class="add-btn" (click)="goRegister()">
+          {{ 'common.add' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>

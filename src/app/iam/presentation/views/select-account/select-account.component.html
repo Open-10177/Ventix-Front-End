@@ -1,0 +1,37 @@
+<div class="page">
+  <div class="deco deco-tr"></div>
+  <div class="deco deco-bl"></div>
+
+  <div class="content">
+    <header class="header">
+      <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2 class="title">{{ 'account.title' | translate }}</h2>
+    </header>
+
+    <div class="accounts-grid">
+      @for (account of accounts; track account.id) {
+        <mat-card class="account-card" (click)="select(account)">
+          <mat-card-content class="account-content">
+            <img [src]="account.avatarUrl" [alt]="account.username" class="avatar" />
+            <div class="account-info">
+              <p class="account-name">{{ account.username }}</p>
+              <span class="account-role">
+                <mat-icon class="role-icon">{{ account.icon }}</mat-icon>
+                {{ account.role }}
+              </span>
+              <p class="account-desc">{{ account.desc }}</p>
+            </div>
+            <mat-icon class="chevron">chevron_right</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <button type="button" mat-stroked-button class="add-btn" (click)="addAccount()">
+      <mat-icon>person_add</mat-icon>
+      {{ 'account.addAnother' | translate }}
+    </button>
+  </div>
+</div>

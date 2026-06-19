@@ -1,0 +1,148 @@
+@startuml iam
+
+title Bounded Context: IAM (Identity & Access Management)
+
+package "IAM" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    enum UserRole {
+      ESTUDIANTE
+      DUENO_DE_CASA
+    }
+
+    class UserId <<value object>> {
+      - value: string
+      + getValue(): string
+    }
+
+    class User <<entity>> <<aggregate root>> {
+      - userId: UserId
+      - email: string
+      - passwordHash: string
+      - fullName: string
+      - role: UserRole
+      - institutionId: string
+      - isActive: boolean
+    }
+
+    class Session <<entity>> {
+      - sessionId: string
+      - token: string
+      - expiresAt: Date
+      - isRevoked: boolean
+      - userId: UserId
+    }
+
+    class SignInCommand {
+      + email: string
+      + password: string
+    }
+
+    class SignUpCommand {
+      + email: string
+      + password: string
+      + fullName: string
+      + role: UserRole
+      + institutionId: string
+    }
+
+    class RecoverPasswordCommand {
+      + email: string
+    }
+
+    class AssignRoleCommand {
+      + userId: string
+      + role: UserRole
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    interface UserRepository {
+      + findByEmail(email: string): User
+      + findById(id: string): User
+      + save(user: User): void
+    }
+
+    class IamApi {
+      - baseUrl: string
+    }
+
+    class SignInApiEndpoint {
+      + signIn(request: SignInRequest): Observable<SignInResponse>
+    }
+
+    class SignUpApiEndpoint {
+      + signUp(request: SignUpRequest): Observable<SignUpResponse>
+    }
+
+    class RecoverPasswordApiEndpoint {
+      + recoverPassword(request: RecoverPasswordRequest): Observable<RecoverPasswordResponse>
+    }
+
+    class SignInAssembler {
+      + toRequest(command: SignInCommand): SignInRequest
+      + toDomain(response: SignInResponse): Session
+    }
+
+    class SignUpAssembler {
+      + toRequest(command: SignUpCommand): SignUpRequest
+      + toDomain(response: SignUpResponse): User
+    }
+  }
+
+  ' ─── Application Layer ───────────────────────────────────
+  package "application" {
+    class AuthApplicationService {
+      - userRepo: UserRepository
+      + login(command: SignInCommand): string
+      + register(command: SignUpCommand): User
+      + recoverPassword(command: RecoverPasswordCommand): void
+      + assignRole(command: AssignRoleCommand): void
+    }
+  }
+
+  ' ─── Presentation Layer ──────────────────────────────────
+  package "presentation/views" {
+
+    class SignInComponent {
+      - authService: AuthApplicationService
+      + onSubmit(): void
+    }
+
+    class SignUpComponent {
+      - authService: AuthApplicationService
+      + onSubmit(): void
+    }
+
+    class RecoverPasswordComponent {
+      - authService: AuthApplicationService
+      + onSubmit(): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+User "1" *-- "1" UserId
+User "1" *-- "1" UserRole
+User "1" *-- "0..*" Session
+
+AuthApplicationService --> UserRepository
+AuthApplicationService --> SignInCommand
+AuthApplicationService --> SignUpCommand
+AuthApplicationService --> RecoverPasswordCommand
+
+SignInComponent --> AuthApplicationService
+SignUpComponent --> AuthApplicationService
+RecoverPasswordComponent --> AuthApplicationService
+
+SignInApiEndpoint --> SignInAssembler
+SignUpApiEndpoint --> SignUpAssembler
+IamApi --> SignInApiEndpoint
+IamApi --> SignUpApiEndpoint
+IamApi --> RecoverPasswordApiEndpoint
+
+@enduml

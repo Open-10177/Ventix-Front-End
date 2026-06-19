@@ -1,0 +1,77 @@
+.page { padding: 20px 32px; background: #f0f2f5; min-height: 100vh; position: relative; }
+.page-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.back-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: #333; }
+.page-title { font-size: 28px; font-weight: 400; color: #1a3a5c; }
+
+.center-wrapper { max-width: 560px; margin: 0 auto; }
+
+.guides-row { display: flex; gap: 24px; margin-bottom: 40px; }
+.guide-card {
+  flex: 1;
+  max-width: 260px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-top: 4px solid #3ab5c6;
+}
+.guide-label { font-size: 13px; font-weight: 600; color: #3ab5c6; text-align: center; }
+.guide-img { font-size: 72px; width: 72px; height: 72px; color: #1a3a5c; }
+
+.upload-card {
+  width: 100%;
+  border-radius: 20px !important;
+  border: 3px solid #3ab5c6 !important;
+  box-shadow: none !important;
+  background: white !important;
+}
+.upload-content { display: flex; flex-direction: column; align-items: center; padding: 32px 24px !important; gap: 16px; }
+.upload-label { font-size: 20px; font-weight: 500; color: #1a3a5c; align-self: flex-start; }
+.upload-zone {
+  width: 100%;
+  border: 2px dashed #3ab5c6;
+  border-radius: 12px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.upload-zone:hover { background: rgba(58,181,198,0.05); }
+.upload-arrow { font-size: 36px !important; width: 36px !important; height: 36px !important; color: #3ab5c6; }
+.upload-text { font-size: 14px; color: #3ab5c6; font-weight: 500; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 10; }
+.overlay-card {
+  min-width: 300px;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: #3ab5c6 !important;
+  border-radius: 20px !important;
+  color: white;
+}
+.close-btn { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: white; }
+.overlay-title { font-size: 26px; font-weight: 500; color: white; margin: 0; }
+.overlay-sub { font-size: 14px; color: rgba(255,255,255,0.85); margin: 0; max-width: 220px; }
+
+.success-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #4fc3a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success-icon { font-size: 48px; width: 48px; height: 48px; color: white; }

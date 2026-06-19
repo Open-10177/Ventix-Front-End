@@ -1,0 +1,61 @@
+<div class="page">
+  <div class="deco deco-tl"></div>
+  <div class="deco deco-br"></div>
+
+  <mat-card class="auth-card">
+    <mat-card-content>
+
+      <div class="icon-row">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+      </div>
+
+      <h2 class="auth-title">{{ 'auth.signIn' | translate }}</h2>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.email' | translate }}</mat-label>
+        <input matInput type="email" [(ngModel)]="email" />
+        <mat-icon matSuffix>mail_outline</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.password' | translate }}</mat-label>
+        <input matInput [type]="showPw() ? 'text' : 'password'" [(ngModel)]="password" />
+        <button matIconSuffix mat-icon-button type="button" (click)="togglePw()">
+          <mat-icon>{{ showPw() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      @if (error()) {
+        <p class="error-msg">{{ error() }}</p>
+      }
+
+      <button type="button" mat-flat-button class="signup-btn"
+        [disabled]="loading()" (click)="signIn()">
+        @if (loading()) { <mat-icon>hourglass_empty</mat-icon> }
+        {{ 'auth.signInBtn' | translate }}
+      </button>
+
+      <div class="links-row">
+        <a class="link" routerLink="/iam/recover-password">{{ 'auth.forgotPassword' | translate }}</a>
+        <span class="link-sep">·</span>
+        <a class="link" (click)="goSignUp()">{{ 'auth.register' | translate }}</a>
+      </div>
+
+      <mat-divider class="divider" />
+
+      <p class="social-label">{{ 'auth.orContinueWith' | translate }}</p>
+      <div class="social-row">
+        <button type="button" mat-icon-button class="social-btn" matTooltip="Gmail">
+          <mat-icon>mail</mat-icon>
+        </button>
+        <button type="button" mat-icon-button class="social-btn" matTooltip="Apple">
+          <mat-icon>phone_iphone</mat-icon>
+        </button>
+        <button type="button" mat-icon-button class="social-btn" matTooltip="Facebook">
+          <mat-icon>people</mat-icon>
+        </button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

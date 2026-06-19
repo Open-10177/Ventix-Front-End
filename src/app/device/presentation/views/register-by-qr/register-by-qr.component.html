@@ -1,0 +1,45 @@
+<div class="page">
+  <header class="page-header">
+    <button type="button" class="back-btn" (click)="goBack()">←</button>
+    <span class="page-title">{{ 'device.viaQr' | translate }}</span>
+  </header>
+
+  <div class="center-wrapper">
+
+    <div class="guides-row">
+      <div class="guide-card">
+        <span class="guide-label">{{ 'device.quickGuide' | translate }}</span>
+        <mat-icon class="guide-img">qr_code_scanner</mat-icon>
+      </div>
+      <div class="guide-card">
+        <span class="guide-label">{{ 'device.quickGuide' | translate }}</span>
+        <mat-icon class="guide-img">check_circle</mat-icon>
+      </div>
+    </div>
+
+    <mat-card class="upload-card">
+    <mat-card-content class="upload-content">
+      <span class="upload-label">{{ 'device.uploadImage' | translate }}</span>
+      <div class="upload-zone" (click)="fileInput.click()">
+        <mat-icon class="upload-arrow">download</mat-icon>
+        <span class="upload-text">{{ 'device.chooseFromFiles' | translate }}</span>
+      </div>
+      <input type="file" #fileInput accept="image/*" style="display:none" (change)="onFileSelected($event)" />
+    </mat-card-content>
+  </mat-card>
+
+  </div>
+
+  @if (store.registeringStatus() === 'connected') {
+    <div class="overlay">
+      <mat-card class="overlay-card">
+        <button type="button" class="close-btn" (click)="proceed()">✕</button>
+        <h2 class="overlay-title">{{ 'device.connected' | translate }}</h2>
+        <p class="overlay-sub">{{ 'device.enjoyFeatures' | translate }}</p>
+        <div class="success-circle">
+          <mat-icon class="success-icon">check</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+  }
+</div>

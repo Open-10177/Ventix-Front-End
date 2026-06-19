@@ -1,0 +1,166 @@
+.page { padding: 20px 32px; background: #f0f2f5; min-height: 100vh; }
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.back-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: #333; }
+.page-title { font-size: 32px; font-weight: 400; flex: 1; color: #1a3a5c; margin: 0; }
+.header-icons { display: flex; align-items: center; gap: 4px; }
+.header-btn { color: #555; }
+.avatar-btn { padding: 0 !important; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+
+/* ── Grid ── */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+/* ── Profile card ── */
+.profile-card {
+  grid-column: 1;
+  grid-row: 1;
+  background: #3ab5c6 !important;
+  border-radius: 20px !important;
+}
+.profile-content {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 28px !important;
+}
+.profile-fields { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.field-label { font-size: 13px; font-weight: 600; color: white; margin: 0 0 2px; }
+
+.settings-field { width: 100%; }
+
+/* Form field outline color on teal background */
+::ng-deep .profile-card .mdc-notched-outline__leading,
+::ng-deep .profile-card .mdc-notched-outline__notch,
+::ng-deep .profile-card .mdc-notched-outline__trailing {
+  border-color: rgba(255,255,255,0.55) !important;
+}
+::ng-deep .profile-card .mat-mdc-input-element { color: white !important; }
+::ng-deep .profile-card .mat-mdc-input-element::placeholder { color: rgba(255,255,255,0.55) !important; }
+::ng-deep .profile-card .mat-mdc-input-element[readonly] { opacity: 0.65; }
+::ng-deep .profile-card .mat-mdc-form-field-icon-suffix button mat-icon { color: white !important; }
+::ng-deep .profile-card .mat-mdc-icon-button { color: white !important; }
+
+.dark-btn {
+  background: #1a3a5c !important;
+  color: white !important;
+  border-radius: 20px !important;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+/* Profile photo column */
+.profile-photo { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.username-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.username-text { font-size: 15px; color: white; font-weight: 500; }
+.username-input {
+  font-size: 15px;
+  color: white;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 8px;
+  padding: 4px 10px;
+  width: 110px;
+  outline: none;
+}
+.edit-icon-btn { color: white !important; width: 32px !important; height: 32px !important; }
+::ng-deep .edit-icon-btn mat-icon { font-size: 18px !important; }
+
+.profile-img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; }
+
+/* ── Language card ── */
+.language-card {
+  grid-column: 2;
+  grid-row: 1;
+  background: #2aa8bc !important;
+  border-radius: 20px !important;
+}
+.language-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px !important;
+}
+.lang-title { font-size: 16px; font-weight: 500; color: white; margin: 0; }
+.divider-white { border-color: rgba(255,255,255,0.35) !important; }
+
+.lang-btn {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 6px 20px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.lang-btn:hover { border-color: rgba(255,255,255,0.45); }
+.lang-btn.lang-selected { border-color: white; font-weight: 600; }
+.lang-save { align-self: center; }
+
+/* ── Plan card ── */
+.plan-card {
+  grid-column: 1;
+  grid-row: 2;
+  background: #3ab5c6 !important;
+  border-radius: 20px !important;
+}
+.plan-content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 28px !important;
+}
+.plan-info { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.plan-title { font-size: 15px; color: white; margin: 0; }
+.plan-title strong { font-size: 17px; }
+.plan-features {
+  list-style: none;
+  padding: 12px 16px;
+  margin: 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+}
+.plan-features li { font-size: 13px; color: white; font-family: monospace; margin-bottom: 4px; }
+.plan-features li:last-child { margin-bottom: 0; }
+.plan-image { width: 120px; height: 130px; background: #4fc3a1; border-radius: 12px; flex-shrink: 0; }
+
+/* ── Account actions ── */
+.account-actions {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+.account-btn {
+  width: 180px;
+  border-radius: 24px !important;
+  border-color: #1a3a5c !important;
+  color: #1a3a5c !important;
+}
+.logout-btn {
+  border-color: #e53935 !important;
+  color: #e53935 !important;
+}

@@ -1,0 +1,63 @@
+<div class="page">
+  <header class="page-header">
+    <button type="button" class="back-btn" (click)="goBack()">←</button>
+    <h1>{{ 'notifications.title' | translate }}</h1>
+  </header>
+
+  @if (store.notifications().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">notifications_none</mat-icon>
+      <p>{{ 'notifications.empty' | translate }}</p>
+    </div>
+  }
+
+  @if (urgentNotifs.length > 0) {
+    <p class="section-label">{{ 'notifications.important' | translate }}</p>
+
+    @for (n of urgentNotifs; track n.id) {
+      <mat-card class="notif-card" [ngClass]="n.severity">
+        <mat-card-content class="notif-content">
+          <div class="stripe"></div>
+          <mat-icon class="notif-icon-mat">{{ n.icon }}</mat-icon>
+          <div class="notif-body">
+            <p class="notif-title">{{ n.title }}</p>
+            <p class="notif-desc">{{ n.description }}</p>
+            @if (n.action) {
+              <p class="notif-action">
+                <mat-icon class="action-icon">arrow_right_alt</mat-icon>
+                {{ n.action }}
+              </p>
+            }
+          </div>
+          <div class="notif-meta">
+            <span class="notif-time">{{ n.time }}</span>
+            <button type="button" mat-flat-button class="detail-btn" (click)="openDetail(n)">{{ 'common.viewDetails' | translate }}</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <mat-divider class="section-divider" />
+  }
+
+  @if (infoNotifs.length > 0) {
+    <p class="section-label">{{ 'notifications.information' | translate }}</p>
+
+    @for (n of infoNotifs; track n.id) {
+      <mat-card class="notif-card info">
+        <mat-card-content class="notif-content">
+          <div class="stripe"></div>
+          <mat-icon class="notif-icon-mat">{{ n.icon }}</mat-icon>
+          <div class="notif-body">
+            <p class="notif-title">{{ n.title }}</p>
+            <p class="notif-desc">{{ n.description }}</p>
+          </div>
+          <div class="notif-meta">
+            <span class="notif-time">{{ n.time }}</span>
+            <button type="button" mat-stroked-button class="detail-btn-outline" (click)="openDetail(n)">{{ 'common.viewDetails' | translate }}</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+</div>

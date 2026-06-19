@@ -1,0 +1,243 @@
+@startuml payment
+
+title Bounded Context: Payment (Stripe)
+
+package "Payment" {
+
+  ' ─── Domain Layer ───────────────────────────────────────
+  package "domain/model" {
+
+    enum PlanType {
+      NORMAL
+      PLUS
+    }
+
+    enum SubscriptionStatus {
+      ACTIVE
+      CANCELLED
+      PAST_DUE
+    }
+
+    enum OrderStatus {
+      PENDING
+      CONFIRMED
+      FAILED
+      REFUNDED
+    }
+
+    enum InvoiceStatus {
+      PENDING
+      PAID
+      FAILED
+    }
+
+    enum RefundStatus {
+      PENDING
+      PROCESSED
+      FAILED
+    }
+
+    class Customer <<entity>> <<aggregate root>> {
+      - customerId: string
+      - customerUuid: string
+      - userUuid: string
+      - institutionId: string
+      - stripeCustomerId: string
+      + hasActiveSubscription(): boolean
+    }
+
+    class Plan <<value object>> {
+      - planId: string
+      - name: PlanType
+      - price: number
+      - isRecurring: boolean
+      - features: string[]
+    }
+
+    class Subscription <<entity>> {
+      - subId: string
+      - subUuid: string
+      - userUuid: string
+      - planType: PlanType
+      - status: SubscriptionStatus
+      - renewsAt: Date
+      - cancelledAt: Date
+      - stripeSubscriptionId: string
+      + isActive(): boolean
+      + cancel(): void
+    }
+
+    class Order <<entity>> {
+      - orderId: string
+      - orderUuid: string
+      - userUuid: string
+      - nodeUuid: string
+      - planType: PlanType
+      - status: OrderStatus
+      - amount: number
+      - currency: string
+      - stripePaymentIntentId: string
+      + confirm(): void
+      + refund(): void
+    }
+
+    class Invoice <<entity>> {
+      - invoiceId: string
+      - invoiceUuid: string
+      - userUuid: string
+      - amount: number
+      - currency: string
+      - status: InvoiceStatus
+      - dueAt: Date
+      - paidAt: Date
+      - stripeInvoiceId: string
+      - downloadUrl: string
+    }
+
+    class Refund <<entity>> {
+      - refundId: string
+      - refundUuid: string
+      - reason: string
+      - amount: number
+      - currency: string
+      - status: RefundStatus
+      - stripeRefundId: string
+      - processedAt: Date
+    }
+
+    class CreateSubscriptionCommand {
+      + userId: string
+      + planType: PlanType
+    }
+
+    class CancelSubscriptionCommand {
+      + subscriptionId: string
+    }
+
+    class PlaceOrderCommand {
+      + userId: string
+      + nodeUuid: string
+      + planType: PlanType
+    }
+
+    class GetInvoicesQuery {
+      + customerId: string
+    }
+  }
+
+  ' ─── Infrastructure Layer ────────────────────────────────
+  package "infrastructure" {
+
+    class PaymentApi {
+      - baseUrl: string
+    }
+
+    class SubscriptionApiEndpoint {
+      + getSubscription(userId: string): Observable<Subscription>
+      + create(request: SubscriptionRequest): Observable<Subscription>
+      + cancel(id: string): Observable<void>
+    }
+
+    class OrderApiEndpoint {
+      + placeOrder(request: OrderRequest): Observable<Order>
+      + getOrder(id: string): Observable<Order>
+    }
+
+    class InvoiceApiEndpoint {
+      + getInvoices(query: GetInvoicesQuery): Observable<Invoice[]>
+      + download(invoiceId: string): Observable<Blob>
+    }
+
+    class SubscriptionAssembler {
+      + toDomain(response: SubscriptionResponse): Subscription
+      + toRequest(command: CreateSubscriptionCommand): SubscriptionRequest
+    }
+
+    class OrderAssembler {
+      + toDomain(response: OrderResponse): Order
+      + toRequest(command: PlaceOrderCommand): OrderRequest
+    }
+
+    class InvoiceAssembler {
+      + toDomain(response: InvoiceResponse): Invoice
+    }
+  }
+
+  ' ─── Application Layer ───────────────────────────────────
+  package "application" {
+    class PaymentStore {
+      - plans: Plan[]
+      - subscription: Subscription
+      - orders: Order[]
+      - invoices: Invoice[]
+      + loadPlans(): void
+      + createSubscription(command: CreateSubscriptionCommand): void
+      + cancelSubscription(command: CancelSubscriptionCommand): void
+      + placeOrder(command: PlaceOrderCommand): void
+      + loadInvoices(query: GetInvoicesQuery): void
+    }
+  }
+
+  ' ─── Presentation Layer ──────────────────────────────────
+  package "presentation/views" {
+
+    class PlanSelectorComponent {
+      - store: PaymentStore
+      - selectedPlan: Plan
+      + ngOnInit(): void
+      + onSelectPlan(plan: Plan): void
+      + onCheckout(): void
+    }
+
+    class CheckoutComponent {
+      - store: PaymentStore
+      - plan: Plan
+      - isProcessing: boolean
+      + ngOnInit(): void
+      + initStripeElements(): void
+      + onConfirmPayment(): void
+      + onSuccess(): void
+    }
+
+    class SubscriptionDetailComponent {
+      - store: PaymentStore
+      + ngOnInit(): void
+      + onCancel(): void
+      + getPlanBadge(): string
+    }
+
+    class InvoiceListComponent {
+      - store: PaymentStore
+      + ngOnInit(): void
+      + onDownloadInvoice(id: string): void
+    }
+  }
+}
+
+' ─── Relationships ────────────────────────────────────────
+Customer "1" *-- "0..*" Subscription
+Customer "1" *-- "0..*" Order
+Customer "1" *-- "0..*" Invoice
+Order "1" *-- "0..*" Refund
+Order "1" *-- "0..1" Invoice
+Subscription "1" *-- "1" PlanType
+Order "1" *-- "1" OrderStatus
+
+PaymentStore --> SubscriptionApiEndpoint
+PaymentStore --> OrderApiEndpoint
+PaymentStore --> InvoiceApiEndpoint
+
+PlanSelectorComponent --> PaymentStore
+CheckoutComponent --> PaymentStore
+SubscriptionDetailComponent --> PaymentStore
+InvoiceListComponent --> PaymentStore
+
+PaymentApi --> SubscriptionApiEndpoint
+PaymentApi --> OrderApiEndpoint
+PaymentApi --> InvoiceApiEndpoint
+
+SubscriptionApiEndpoint --> SubscriptionAssembler
+OrderApiEndpoint --> OrderAssembler
+InvoiceApiEndpoint --> InvoiceAssembler
+
+@enduml

@@ -1,0 +1,57 @@
+<div class="page">
+
+  <header class="page-header">
+    <button type="button" mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ 'plans.title' | translate }}</h1>
+    <p class="subtitle">{{ 'plans.subtitle' | translate }}</p>
+  </header>
+
+  <div class="plans-grid">
+    @for (plan of plans; track plan.id) {
+      <mat-card class="plan-card" [class.current]="plan.current" [class.featured]="plan.id === 'exclusivo'">
+
+        @if (plan.current) {
+          <div class="current-badge">
+            <mat-icon>check</mat-icon> {{ 'plans.currentPlan' | translate }}
+          </div>
+        }
+
+        <mat-card-content class="plan-content">
+          <div class="plan-icon-wrap" [style.background]="plan.color + '22'">
+            <mat-icon class="plan-icon" [style.color]="plan.color">{{ plan.icon }}</mat-icon>
+          </div>
+
+          <h2 class="plan-name">{{ plan.name }}</h2>
+
+          <div class="plan-price">
+            <span class="price">{{ plan.price }}</span>
+            <span class="period">{{ plan.period }}</span>
+          </div>
+
+          <mat-divider class="plan-divider" />
+
+          <ul class="features-list">
+            @for (f of plan.features; track f) {
+              <li class="feature-item">
+                <mat-icon class="feature-icon">check_circle</mat-icon>
+                {{ f }}
+              </li>
+            }
+          </ul>
+
+          <button type="button" mat-flat-button class="select-btn"
+            [class.current-btn]="plan.current"
+            [disabled]="plan.current"
+            (click)="select(plan)"
+            [style.background]="plan.current ? '#ccc' : plan.color">
+            {{ (plan.current ? 'plans.currentPlan' : 'plans.select') | translate }}
+          </button>
+        </mat-card-content>
+
+      </mat-card>
+    }
+  </div>
+
+</div>

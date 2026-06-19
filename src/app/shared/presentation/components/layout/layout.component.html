@@ -1,0 +1,40 @@
+<mat-sidenav-container class="shell">
+
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <div class="sidenav-inner">
+
+      <img src="/ventixlogo.jpg" alt="Ventix" width="48" class="logo" />
+
+      <button type="button" mat-icon-button class="nav-btn"
+        routerLink="/home" routerLinkActive="nav-active">
+        <mat-icon>home</mat-icon>
+      </button>
+
+      <button type="button" mat-icon-button class="nav-btn"
+        routerLink="/monitoring/notifications" routerLinkActive="nav-active">
+        <mat-icon
+          [matBadge]="store.notificationCount()"
+          matBadgeColor="warn"
+          [matBadgeHidden]="store.notificationCount() === 0">
+          notifications
+        </mat-icon>
+      </button>
+
+      <button type="button" mat-icon-button class="nav-btn"
+        routerLink="/settings" routerLinkActive="nav-active">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <button type="button" mat-icon-button class="avatar-btn"
+        routerLink="/settings">
+        <img src="https://i.pravatar.cc/40" alt="avatar" class="avatar-img" />
+      </button>
+
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

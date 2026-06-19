@@ -1,0 +1,53 @@
+.page {
+  min-height: 100vh;
+  background: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative blobs */
+.deco { position: absolute; border-radius: 50%; }
+.deco-tl { top: -80px; left: -80px; width: 320px; height: 320px; background: rgba(58,181,198,0.22); }
+.deco-br { bottom: -100px; right: -100px; width: 380px; height: 380px; background: rgba(26,58,92,0.15); }
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+  z-index: 1;
+}
+::ng-deep .auth-card .mat-mdc-card-content { padding: 32px !important; }
+
+.icon-row { display: flex; justify-content: center; margin-bottom: 8px; }
+.user-icon { font-size: 72px !important; width: 72px !important; height: 72px !important; color: #1a3a5c; }
+
+.auth-title { text-align: center; font-size: 22px; font-weight: 500; color: #1a3a5c; margin: 0 0 24px; }
+
+.field { width: 100%; margin-bottom: 8px; }
+
+.error-msg { color: #e53935; font-size: 13px; text-align: center; margin: 4px 0; }
+
+.signup-btn {
+  width: 100%;
+  background: #3ab5c6 !important;
+  color: white !important;
+  border-radius: 24px !important;
+  height: 44px !important;
+  font-size: 16px !important;
+  margin: 8px 0;
+}
+
+.links-row { display: flex; justify-content: center; gap: 8px; margin: 12px 0; }
+.link { font-size: 13px; color: #3ab5c6; cursor: pointer; text-decoration: none; }
+.link:hover { text-decoration: underline; }
+.link-sep { color: #aaa; }
+
+.divider { margin: 16px 0 !important; }
+.social-label { text-align: center; font-size: 12px; color: #aaa; margin: 0 0 8px; }
+.social-row { display: flex; justify-content: center; gap: 8px; }
+.social-btn { color: #555; border: 1px solid #ddd !important; border-radius: 50% !important; }

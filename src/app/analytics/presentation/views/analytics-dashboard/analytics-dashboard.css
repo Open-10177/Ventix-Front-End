@@ -1,0 +1,93 @@
+.page { padding: 24px 32px; background: #f0f2f5; min-height: 100vh; }
+
+/* ── Header ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.header-left { display: flex; align-items: center; gap: 8px; }
+.page-header h1 { margin: 0; font-size: 48px; font-weight: 300; color: #1a3a5c; }
+.back-btn { color: #1a3a5c; }
+.header-right { display: flex; align-items: center; gap: 4px; }
+.header-btn { color: #555; }
+.avatar-btn { padding: 0 !important; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #3ab5c6; }
+
+.date-input-hidden { display: none; }
+
+/* ── Action buttons ── */
+.actions { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+
+.btn-period {
+  background: #3ab5c6 !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+.btn-date {
+  border-color: #3ab5c6 !important;
+  color: #3ab5c6 !important;
+  border-radius: 8px !important;
+}
+.btn-report {
+  background: #1a3a5c !important;
+  color: white !important;
+  border-radius: 24px !important;
+}
+
+/* ── KPI grid ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  border-radius: 14px !important;
+  border: 1px solid #c7eef4 !important;
+  box-shadow: 0 4px 12px rgba(0,130,160,0.12) !important;
+  text-align: center;
+}
+::ng-deep .kpi-card .mat-mdc-card-content {
+  padding: 20px 16px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.kpi-title  { font-size: 13px; color: #6a8ca0; margin: 0; }
+.kpi-value  { font-size: 38px; font-weight: 300; color: #1a3a5c; margin: 4px 0; line-height: 1; }
+.kpi-status { font-size: 12px; color: #33b86c; margin: 0; }
+
+/* ── History table ── */
+.table-card {
+  border-radius: 14px !important;
+  background: #3ab5c6 !important;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+.history-table { background: transparent; width: 100%; }
+
+::ng-deep .table-card .mat-mdc-header-cell {
+  color: white !important;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.35) !important;
+  text-align: center;
+  justify-content: center;
+}
+::ng-deep .table-card .mat-mdc-cell {
+  color: white !important;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+  text-align: center;
+  justify-content: center;
+}
+::ng-deep .table-card .mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: none !important;
+}
+::ng-deep .table-card .mat-mdc-row:hover {
+  background: rgba(255,255,255,0.08) !important;
+}

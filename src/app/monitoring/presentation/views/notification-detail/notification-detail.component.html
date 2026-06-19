@@ -1,0 +1,42 @@
+<div class="detail" [class]="data.severity">
+
+  <div class="detail-head">
+    <div class="icon-wrap">
+      <mat-icon class="detail-icon">{{ data.icon }}</mat-icon>
+    </div>
+    <span class="severity-chip">{{ severityLabel[data.severity] | translate }}</span>
+    <button type="button" mat-icon-button class="close-btn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <h2 mat-dialog-title class="detail-title">{{ data.title }}</h2>
+
+  <mat-dialog-content>
+    <p class="detail-desc">{{ data.description }}</p>
+
+    <mat-divider class="div" />
+
+    <div class="meta-row">
+      <mat-icon class="meta-icon">schedule</mat-icon>
+      <span>{{ data.time }}</span>
+    </div>
+
+    @if (data.action) {
+      <div class="meta-row action-row">
+        <mat-icon class="meta-icon">bolt</mat-icon>
+        <span>{{ 'notifications.suggestedAction' | translate }}: <strong>{{ data.action }}</strong></span>
+      </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-stroked-button (click)="close()">{{ 'common.close' | translate }}</button>
+    @if (data.action) {
+      <button type="button" mat-flat-button class="resolve-btn" (click)="resolve()">
+        {{ data.action }}
+      </button>
+    }
+  </mat-dialog-actions>
+
+</div>

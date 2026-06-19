@@ -1,0 +1,67 @@
+<div class="page">
+  <div class="deco deco-tl"></div>
+  <div class="deco deco-br"></div>
+
+  <mat-card class="auth-card">
+    <mat-card-content>
+
+      <div class="icon-row">
+        <mat-icon class="user-icon">person_add</mat-icon>
+      </div>
+
+      <h2 class="auth-title">{{ 'auth.createAccount' | translate }}</h2>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.fullName' | translate }}</mat-label>
+        <input matInput [(ngModel)]="username" [title]="'auth.fullName' | translate" />
+        <mat-icon matSuffix>badge</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.email' | translate }}</mat-label>
+        <input matInput type="email" [(ngModel)]="email" [title]="'auth.email' | translate" />
+        <mat-icon matSuffix>mail_outline</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.password' | translate }}</mat-label>
+        <input matInput [type]="showPw() ? 'text' : 'password'" [(ngModel)]="password" [title]="'auth.password' | translate" />
+        <button matIconSuffix mat-icon-button type="button" (click)="togglePw()">
+          <mat-icon>{{ showPw() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>{{ 'auth.usageType' | translate }}</mat-label>
+        <mat-select [(ngModel)]="role">
+          @for (r of roles; track r.value) {
+            <mat-option [value]="r.value">
+              <mat-icon>{{ r.icon }}</mat-icon>
+              {{ r.labelKey | translate }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-icon matSuffix>tune</mat-icon>
+      </mat-form-field>
+
+      @if (error()) {
+        <p class="error-msg">{{ error() }}</p>
+      }
+
+      <button type="button" mat-flat-button class="register-btn"
+        [disabled]="loading() || !username || !email || !password || !role"
+        (click)="register()">
+        @if (loading()) { <mat-icon>hourglass_empty</mat-icon> }
+        {{ 'auth.registerBtn' | translate }}
+      </button>
+
+      <mat-divider class="divider" />
+
+      <p class="signin-row">
+        {{ 'auth.alreadyHaveAccount' | translate }}
+        <a class="link" routerLink="/iam/sign-in">{{ 'auth.login' | translate }}</a>
+      </p>
+
+    </mat-card-content>
+  </mat-card>
+</div>

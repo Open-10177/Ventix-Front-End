@@ -1,0 +1,95 @@
+.page { padding: 28px 32px; background: #f0f2f5; min-height: 100vh; position: relative; }
+
+.page-header { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+.back-btn { color: #1a3a5c; }
+h1 { font-size: 30px; font-weight: 300; color: #1a3a5c; margin: 0; }
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  max-width: 900px;
+  align-items: start;
+}
+
+.pay-card, .summary-card { border-radius: 18px !important; }
+::ng-deep .pay-card .mat-mdc-card-content,
+::ng-deep .summary-card .mat-mdc-card-content { padding: 24px !important; }
+
+.section-title { font-size: 16px; font-weight: 600; color: #1a3a5c; margin: 0 0 16px; }
+
+/* Method toggle */
+.method-group { width: 100%; }
+::ng-deep .method-group .mat-button-toggle { flex: 1; }
+::ng-deep .method-group .mat-button-toggle-label-content {
+  display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px;
+}
+
+.div { margin: 20px 0 !important; }
+
+/* Forms */
+.form { display: flex; flex-direction: column; gap: 4px; }
+.full { width: 100%; }
+.row { display: flex; gap: 12px; }
+.half { flex: 1; }
+
+/* Yape QR */
+.qr-box {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 20px; background: #f7f9fb; border-radius: 12px; margin-bottom: 12px;
+}
+.qr-icon { font-size: 72px !important; width: 72px !important; height: 72px !important; color: #1a3a5c; }
+.qr-box p { font-size: 13px; color: #888; margin: 0; }
+
+/* PayPal */
+.paypal-box {
+  align-items: center; text-align: center; padding: 32px 16px;
+  background: #f7f9fb; border-radius: 12px;
+}
+.paypal-icon { font-size: 56px !important; width: 56px !important; height: 56px !important; color: #3ab5c6; }
+.paypal-box p { font-size: 14px; color: #666; margin: 12px 0 0; max-width: 280px; }
+
+/* Summary */
+.summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #444; margin-bottom: 10px; }
+.summary-row.muted { color: #aaa; font-size: 13px; }
+.summary-row.total { font-size: 18px; font-weight: 700; color: #1a3a5c; }
+.summary-price { font-weight: 600; }
+
+.pay-btn {
+  width: 100% !important;
+  background: #3ab5c6 !important;
+  color: white !important;
+  border-radius: 24px !important;
+  height: 46px !important;
+  font-size: 15px !important;
+  margin-top: 16px;
+}
+::ng-deep .pay-btn .mat-mdc-progress-spinner circle { stroke: white !important; }
+.btn-content { display: inline-flex; align-items: center; gap: 6px; }
+
+.secure-note {
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+  font-size: 12px; color: #4fc3a1; margin: 12px 0 0;
+}
+.secure-note mat-icon { font-size: 14px !important; width: 14px !important; height: 14px !important; }
+
+/* Success overlay */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center; z-index: 20;
+}
+.success-card {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 40px 48px !important; border-radius: 20px !important; text-align: center;
+}
+.success-circle {
+  width: 80px; height: 80px; border-radius: 50%; background: #4fc3a1;
+  display: flex; align-items: center; justify-content: center;
+}
+.success-icon { font-size: 48px !important; width: 48px !important; height: 48px !important; color: white; }
+.success-card h2 { font-size: 22px; color: #1a3a5c; margin: 0; }
+.success-card p { font-size: 14px; color: #666; margin: 0; }
+.finish-btn {
+  background: #1a3a5c !important; color: white !important;
+  border-radius: 24px !important; margin-top: 8px; min-width: 160px;
+}
